@@ -3,10 +3,8 @@
 
 (require 'package)
 ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-(add-to-list
-     'package-archives
-     '("melpa" . "http://melpa.milkbox.net/packages/")
-        t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (package-initialize)
 
@@ -41,3 +39,6 @@
 (powerline-default-theme)
 
 (load-theme 'misterioso)
+
+(if (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta))
