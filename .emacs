@@ -27,6 +27,9 @@
 (setq default-tab-width 4)
 (setq-default display-line-numbers 'relative)
 
+(require 'smooth-scrolling)
+(smooth-scrolling-mode)
+
 (require 'magit)
 
 (require 'disable-mouse)
