@@ -16,7 +16,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (disable-mouse edit-indirect markdown-mode magit helm smooth-scrolling powerline))))
+    (disable-mouse edit-indirect markdown-mode magit helm helm-projectile smooth-scrolling powerline))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -42,7 +42,16 @@
 ;; enable smooth scrolling mode
 (smooth-scrolling-mode)
 
+(require 'projectile)
+;; redefine projectile key bindings
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+
 (require 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (require 'disable-mouse)
 ;; disable mouse
