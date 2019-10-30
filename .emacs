@@ -43,12 +43,13 @@
 (smooth-scrolling-mode)
 
 (require 'projectile)
+(helm-projectile-on)
+(projectile-global-mode)
 ;; redefine projectile key bindings
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
+(setq projectile-completpion-system 'helm)
+(setq projectile-switch-project-action 'helm-projectile)
 
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
