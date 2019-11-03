@@ -7,8 +7,14 @@ export ZSH=/Users/mihai/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+if [ -n "$INSIDE_EMACS" ]; then
+    export ZSH_THEME="rawsyntax"
+else
+    export ZSH_THEME="robbyrussell"
 
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+fi
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
 # cause zsh load theme from this variable instead of
@@ -59,8 +65,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git
-    emacs
+  git
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -99,5 +104,3 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export POWERLINE_CONFIG_COMMAND="~/Library/Python/3.7/bin"
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
