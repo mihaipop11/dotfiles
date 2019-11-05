@@ -89,10 +89,6 @@
 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 
-;; (require 'powerline)
-;; enable powerline
-;; (powerline-default-theme)
-
 ;; load misterioso theme
 (load-theme 'misterioso)
 
