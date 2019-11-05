@@ -32,8 +32,8 @@
 ;; map ibuffer command to C-x C-b
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(global-set-key (kbd "M-f") 'forward-to-word)
-(global-set-key (kbd "M-b") 'backward-to-word)
+;; (global-set-key (kbd "M-f") 'forward-to-word)
+;; (global-set-key (kbd "M-b") 'backward-to-word)
 
 ;; set tab width of 4 characters
 (setq default-tab-width 4)
