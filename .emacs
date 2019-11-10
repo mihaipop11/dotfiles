@@ -130,3 +130,6 @@
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+;; Highlights matching parenthesis
+(show-paren-mode 1)
