@@ -136,3 +136,15 @@
 
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
+
+(set-face-attribute 'mode-line nil
+                    :background "#9EFF00"
+                    :foreground "black"
+		    :overline nil
+                    :underline nil)
+
+(set-face-attribute 'mode-line-inactive nil
+                    :background "#565063"
+                    :foreground "white"
+                    :overline nil
+                    :underline nil)
