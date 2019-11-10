@@ -32,6 +32,8 @@
 ;; map ibuffer command to C-x C-b
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(global-set-key (kbd "C-c b") 'projectile-compile-project)
+
 ;; (global-set-key (kbd "M-f") 'forward-to-word)
 ;; (global-set-key (kbd "M-b") 'backward-to-word)
 
