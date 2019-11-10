@@ -106,7 +106,10 @@
 (setq auto-save-default nil)
 
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin")))
+
 (setq exec-path (append exec-path '("/usr/local/bin")))
+(setq exec-path (append exec-path '(substitute-in-file-name ":$HOME/.cargo/bin")))
 
 (require 'irony)
 (add-hook 'c++-mode-hook 'irony-mode)
