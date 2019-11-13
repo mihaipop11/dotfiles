@@ -136,6 +136,7 @@
 
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
+(setq compilation-scroll-output 'first-error)
 
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
