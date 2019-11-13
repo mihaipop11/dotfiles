@@ -38,7 +38,12 @@
 ;; (global-set-key (kbd "M-b") 'backward-to-word)
 
 ;; set tab width of 4 characters
-(setq default-tab-width 4)
+;;(setq default-tab-width 4)
+(setq-default c-basic-offset 4)
+
+(require 'whitespace)
+(whitespace-mode 1)
+(setq-default whitespace-style '(trailing tabs tab-mark))
 
 ;; set line numbering relative to the cursor
 (setq-default display-line-numbers 'relative)
