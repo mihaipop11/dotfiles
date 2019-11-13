@@ -123,6 +123,9 @@
   (add-to-list 'company-backends 'company-irony-c-headers)
 	))
 
+(require 'rust-mode)
+(require 'flycheck-rust)
+(require 'racer)
 (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
 (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src") ;; Rust source code PATH
 
