@@ -160,3 +160,18 @@
                     :foreground "white"
                     :overline nil
                     :underline nil)
+
+(defun kill-compilation-buffer-if-successful (buffer string)
+ "Bury a compilation buffer if succeeded without warnings "
+ (when (and
+         (buffer-live-p buffer)
+         (string-match "compilation" (buffer-name buffer))
+         (string-match "finished" string)
+         (not
+          (with-current-buffer buffer
+            (goto-char (point-min))
+            (search-forward "warning" nil t))))
+         (run-with-timer 1 nil 'delete-windows-on
+           (get-buffer-create "*compilation*") buffer)))
+
+(add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
