@@ -141,7 +141,10 @@
 
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
+;; Stop on the first error.
 (setq compilation-scroll-output 'first-error)
+;; Don't stop on info or warnings.
+(setq compilation-skip-threshold 2)
 
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
