@@ -171,7 +171,10 @@
           (with-current-buffer buffer
             (goto-char (point-min))
             (search-forward "warning" nil t))))
-         (run-with-timer 1 nil 'delete-windows-on
-           (get-buffer-create "*compilation*") buffer)))
+         (run-with-timer 1 nil
+          (lambda (buf)
+            (bury-buffer buf)
+            (delete-window))
+              buffer)))
 
 (add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
