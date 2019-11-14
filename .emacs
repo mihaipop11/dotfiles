@@ -126,7 +126,7 @@
 (add-hook 'c++-mode-hook #'(lambda ()
   (add-to-list 'company-backends 'company-irony)
   (add-to-list 'company-backends 'company-irony-c-headers)
-	))
+  ))
 
 (require 'rust-mode)
 (require 'flycheck-rust)
