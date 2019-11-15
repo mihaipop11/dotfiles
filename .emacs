@@ -41,6 +41,9 @@
 ;;(setq default-tab-width 4)
 (setq-default c-basic-offset 4)
 
+;; don't use tabs
+(setq-default indent-tabs-mode nil)
+
 (require 'whitespace)
 (whitespace-mode 1)
 (setq-default whitespace-style '(trailing tabs tab-mark))
