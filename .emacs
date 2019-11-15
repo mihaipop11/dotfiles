@@ -44,9 +44,11 @@
 ;; don't use tabs
 (setq-default indent-tabs-mode nil)
 
+
 (require 'whitespace)
-(whitespace-mode 1)
 (setq-default whitespace-style '(trailing tabs tab-mark))
+(setq-default whitespace-line-column 80)
+(global-whitespace-mode t)
 
 ;; set line numbering relative to the cursor
 (setq-default display-line-numbers 'relative)
