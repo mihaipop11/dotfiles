@@ -2,6 +2,8 @@
 (tool-bar-mode -1)
 ;; disable top menubar
 (menu-bar-mode -1)
+;; disable scroll-bar
+(toggle-scroll-bar -1)
 
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
