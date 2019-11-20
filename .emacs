@@ -44,7 +44,6 @@
 ;; don't use tabs
 (setq-default indent-tabs-mode nil)
 
-
 (require 'whitespace)
 (setq-default whitespace-style '(trailing tabs tab-mark))
 (setq-default whitespace-line-column 80)
