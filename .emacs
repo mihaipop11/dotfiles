@@ -194,7 +194,7 @@
             (delete-window))
               buffer)))
 
-(add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
+;; (add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
 
 ;; Switch between cpp and header in C/C++ major mode
 (eval-after-load "cc-mode"
