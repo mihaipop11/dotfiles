@@ -43,8 +43,9 @@
 (setq-default indent-tabs-mode nil)
 
 (require 'whitespace)
-(setq-default whitespace-style '(trailing tabs tab-mark))
-(setq-default whitespace-line-column 80)
+(setq-default whitespace-style '(face tab-mark lines-tail trailing))
+(setq-default whitespace-line-column 120)
+(setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode))
 (global-whitespace-mode t)
 
 ;; set line numbering relative to the cursor
