@@ -39,10 +39,6 @@
 ;; (global-set-key (kbd "M-f") 'forward-to-word)
 ;; (global-set-key (kbd "M-b") 'backward-to-word)
 
-;; set tab width of 4 characters
-;;(setq default-tab-width 4)
-(setq-default c-basic-offset 4)
-
 ;; don't use tabs
 (setq-default indent-tabs-mode nil)
 
@@ -73,6 +69,9 @@
 (require 'disable-mouse)
 ;; disable mouse
 (global-disable-mouse-mode)
+
+;; set tab width of 4 characters
+(setq-default c-basic-offset 4)
 
 (require 'helm-config)
 (require 'helm-gtags)
