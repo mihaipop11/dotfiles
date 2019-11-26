@@ -104,3 +104,4 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export POWERLINE_CONFIG_COMMAND="~/Library/Python/3.7/bin"
 
+export GPG_TTY=$(tty)
