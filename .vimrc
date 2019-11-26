@@ -55,3 +55,4 @@ set termencoding=utf-8
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+
