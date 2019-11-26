@@ -207,5 +207,4 @@
 
 (require 'call-graph)
 (call-graph)
-
 (global-set-key (kbd "C-c C-g") 'call-graph)
