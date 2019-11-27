@@ -45,8 +45,6 @@ ino <Down> <Nop>
 ino <Left> <Nop>
 ino <Right> <Nop>
 
-" comment here
-
 " powerline
 set rtp+=/Users/mihai/Library/Python/3.7/lib/python/site-packages/powerline/bindings/vim
 set laststatus=2
@@ -57,3 +55,4 @@ set termencoding=utf-8
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+
