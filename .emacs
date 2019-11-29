@@ -18,7 +18,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args helm-gtags disable-mouse edit-indirect markdown-mode magit helm helm-projectile smooth-scrolling))))
+    (flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args helm-gtags disable-mouse edit-indirect markdown-mode magit helm helm-projectile smooth-scrolling))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -145,8 +145,11 @@
   (add-to-list 'company-backends 'company-irony-c-headers)
   ))
 
-(require 'rust-mode)
+(require 'flycheck)
+(global-flycheck-mode t)
 (require 'flycheck-rust)
+
+(require 'rust-mode)
 (require 'racer)
 (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
 (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src") ;; Rust source code PATH
