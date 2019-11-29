@@ -165,6 +165,8 @@
 (setq compilation-scroll-output 'first-error)
 ;; Don't stop on info or warnings.
 (setq compilation-skip-threshold 2)
+;; jump to first compilation error
+(setq compilation-auto-jump-to-first-error t)
 
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
