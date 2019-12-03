@@ -77,6 +77,13 @@
 
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
+
+(use-package pinentry
+  :init
+  (setq epa-pinentry-mode 'loopback)
+  :config
+  (pinentry-start))
+
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -254,9 +261,6 @@
      (define-key c-mode-map   (kbd "C-c o") 'ff-find-other-file)
      (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)))
 
-
-(setq epa-pinentry-mode 'loopback)
-(pinentry-start)
 
 (require 'lsp-java)
 (add-hook 'java-wmode-hook #'lsp)
