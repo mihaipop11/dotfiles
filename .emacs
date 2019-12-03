@@ -61,6 +61,14 @@
   :config
   (magit-todos-mode t))
 
+;; Provides the google C/C++ coding style.
+(use-package google-c-style
+  :hook ((c-mode-common)
+         ;; If you want the RETURN key to go to the next
+         ;; line and space over to the right place
+         (c-mode-common . google-make-newline-indent)
+         ))
+
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -91,13 +99,6 @@
 
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
-
-;; Provides the google C/C++ coding style.
-(require 'google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-;; If you want the RETURN key to go to the next line and space over
-;; to the right place
-;; (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
 (require 'helm-config)
 (require 'helm-gtags)
