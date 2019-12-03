@@ -33,6 +33,15 @@
 
 (eval-when-compile
   (require 'use-package))
+
+(use-package whitespace
+  :init
+  (setq-default whitespace-style '(face tab-mark lines-tail trailing))
+  (setq-default whitespace-line-column 120)
+  (setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode))
+  :config
+  (global-whitespace-mode t))
+
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -48,12 +57,6 @@
 
 ;; don't use tabs
 (setq-default indent-tabs-mode nil)
-
-(require 'whitespace)
-(setq-default whitespace-style '(face tab-mark lines-tail trailing))
-(setq-default whitespace-line-column 120)
-(setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode))
-(global-whitespace-mode t)
 
 ;; set line numbering relative to the cursor
 (setq-default display-line-numbers 'relative)
