@@ -71,6 +71,9 @@
 (use-package undo-tree
   :config
   (global-undo-tree-mode t))
+
+(use-package call-graph
+  :bind ("C-c C-g" . call-graph))
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -249,9 +252,6 @@
      (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)))
 
 
-(require 'call-graph)
-(call-graph)
-(global-set-key (kbd "C-c C-g") 'call-graph)
 
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
