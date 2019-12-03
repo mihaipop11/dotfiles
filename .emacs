@@ -74,6 +74,9 @@
 
 (use-package call-graph
   :bind ("C-c C-g" . call-graph))
+
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -252,9 +255,6 @@
      (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)))
 
 
-
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
 (setq epa-pinentry-mode 'loopback)
 (pinentry-start)
 
