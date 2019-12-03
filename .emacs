@@ -177,6 +177,9 @@
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
 
+; Set cursor color to white
+(set-cursor-color "#9EFF00")
+
 (set-face-attribute 'mode-line nil
                     :background "#9EFF00"
                     :foreground "black"
