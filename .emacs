@@ -146,13 +146,6 @@
   (add-to-list 'company-backends 'company-irony-c-headers)
   ))
 
-(require 'flycheck)
-(global-flycheck-mode t)
-(require 'flycheck-rust)
-(require 'flycheck-irony)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
 (require 'rust-mode)
 (require 'racer)
 ;; Rustup binaries PATH
@@ -160,10 +153,29 @@
 ;; Rust source code PATH
 (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src")
 
+(require 'flycheck)
+(global-flycheck-mode t)
+(require 'flycheck-rust)
+(require 'flycheck-irony)
+
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(add-hook 'c++-mode-hook 'flycheck-mode)
+(add-hook 'c-mode-hook 'flycheck-mode)
+
+(require 'flycheck-rtags)
+
+(defun my-flycheck-rtags-setup ()
+  (flycheck-select-checker 'rtags)
+  (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+  (setq-local flycheck-check-syntax-automatically nil))
+;; c-mode-common-hook is also called by c++-mode
+(add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
