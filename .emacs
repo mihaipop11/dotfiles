@@ -48,6 +48,9 @@
   (smooth-scrolling-mode t)
 )
 
+(use-package magit
+  :bind ("C-x g" . magit-status))
+
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -75,9 +78,6 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-completpion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile)
-
-(require 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; enable magit-todos-mode
 (require 'magit-todos)
