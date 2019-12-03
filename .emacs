@@ -51,6 +51,12 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
+;; TODO check if loading after magit is really needed
+(use-package magit-todos
+  :after magit
+  :config
+  (magit-todos-mode t))
+
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -78,10 +84,6 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-completpion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile)
-
-;; enable magit-todos-mode
-(require 'magit-todos)
-(magit-todos-mode t)
 
 (require 'disable-mouse)
 ;; disable mouse
