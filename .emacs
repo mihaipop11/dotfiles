@@ -45,8 +45,7 @@
 ;; use smooth scrolling in buffers
 (use-package smooth-scrolling
   :config
-  (smooth-scrolling-mode t)
-  )
+  (smooth-scrolling-mode t))
 
 (use-package disable-mouse
   :config
