@@ -46,7 +46,11 @@
 (use-package smooth-scrolling
   :config
   (smooth-scrolling-mode t)
-)
+  )
+
+(use-package disable-mouse
+  :config
+  (global-disable-mouse-mode t))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
@@ -84,10 +88,6 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-completpion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile)
-
-(require 'disable-mouse)
-;; disable mouse
-(global-disable-mouse-mode)
 
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
