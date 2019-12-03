@@ -42,6 +42,12 @@
   :config
   (global-whitespace-mode t))
 
+;; use smooth scrolling in buffers
+(use-package smooth-scrolling
+  :config
+  (smooth-scrolling-mode t)
+)
+
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -60,10 +66,6 @@
 
 ;; set line numbering relative to the cursor
 (setq-default display-line-numbers 'relative)
-
-(require 'smooth-scrolling)
-;; enable smooth scrolling mode
-(smooth-scrolling-mode)
 
 (require 'projectile)
 (helm-projectile-on)
