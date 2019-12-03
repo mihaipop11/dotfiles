@@ -68,6 +68,9 @@
          (c-mode-common . google-make-newline-indent)
          ))
 
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode t))
 ;; enable time mode in the status bar
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
@@ -245,8 +248,6 @@
      (define-key c-mode-map   (kbd "C-c o") 'ff-find-other-file)
      (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)))
 
-(require 'undo-tree)
-(global-undo-tree-mode)
 
 (require 'call-graph)
 (call-graph)
