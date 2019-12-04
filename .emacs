@@ -291,6 +291,10 @@
   :hook
   (c++-mode . modern-c++-font-lock-mode))
 
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
@@ -359,8 +363,6 @@
 ;; Rust source code PATH
 (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src")
 
-(require 'flycheck)
-(global-flycheck-mode t)
 (require 'flycheck-rust)
 (require 'flycheck-irony)
 
