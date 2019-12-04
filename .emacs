@@ -78,6 +78,11 @@
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
+(use-package autopair
+  :config
+  ;; enable autopair in all buffers
+  (autopair-global-mode))
+
 (use-package pinentry
   :init
   (setq epa-pinentry-mode 'loopback)
@@ -219,8 +224,6 @@
 ;; jump to first compilation error
 (setq compilation-auto-jump-to-first-error t)
 
-(require 'autopair)
-(autopair-global-mode) ;; enable autopair in all buffers
 
 ; Set cursor color to green
 (set-cursor-color "#9EFF00")
