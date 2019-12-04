@@ -1,10 +1,3 @@
-;; disable top toolbar
-(tool-bar-mode -1)
-;; disable top menubar
-(menu-bar-mode -1)
-;; disable scroll-bar
-(toggle-scroll-bar -1)
-
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -30,6 +23,57 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; disable top toolbar
+(tool-bar-mode -1)
+;; disable top menubar
+(menu-bar-mode -1)
+;; disable scroll-bar
+(toggle-scroll-bar -1)
+;; enable time mode in the status bar
+(display-time-mode 1)
+;; set time hour:min in 24 hour format
+(setq display-time-format "%H:%M")
+;; don't use tabs
+(setq-default indent-tabs-mode nil)
+;; set line numbering relative to the cursor
+(setq-default display-line-numbers 'relative)
+;; set tab width of 4 characters
+(setq-default c-basic-offset 4)
+;; load misterioso theme
+(load-theme 'misterioso)
+;; disable backup
+(setq backup-inhibited t)
+;; disable auto save
+(setq auto-save-default nil)
+;; Highlights matching parenthesis
+(show-paren-mode 1)
+
+;; Set cursor color to green
+(set-cursor-color "#9EFF00")
+;; Set active modeline color to green
+(set-face-attribute 'mode-line nil
+                    :background "#9EFF00"
+                    :foreground "black"
+                    :overline nil
+                    :underline nil)
+;; Set active modeline color to grey
+(set-face-attribute 'mode-line-inactive nil
+                    :background "#565063"
+                    :foreground "white"
+                    :overline nil
+                    :underline nil)
+
+;; if macos
+(if (eq system-type 'darwin)
+  ;; map the emacs meta (M) key to the command kb key
+  (setq mac-command-modifier 'meta))
+(put 'upcase-region 'disabled nil)
+
+;; automatically switch point to the newly created splitted window
+;; after creation for both vertically and horizontally
+(global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
+(global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
 
 (eval-when-compile
   (require 'use-package))
@@ -89,11 +133,6 @@
   :config
   (pinentry-start))
 
-;; enable time mode in the status bar
-(display-time-mode 1)
-;; set time hour:min in 24 hour format
-(setq display-time-format "%H:%M")
-
 ;; map ibuffer command to C-x C-b
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -101,12 +140,6 @@
 
 ;; (global-set-key (kbd "M-f") 'forward-to-word)
 ;; (global-set-key (kbd "M-b") 'backward-to-word)
-
-;; don't use tabs
-(setq-default indent-tabs-mode nil)
-
-;; set line numbering relative to the cursor
-(setq-default display-line-numbers 'relative)
 
 (require 'projectile)
 (helm-projectile-on)
@@ -116,9 +149,6 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-completpion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile)
-
-;; set tab width of 4 characters
-(setq-default c-basic-offset 4)
 
 (require 'helm-config)
 (require 'helm-gtags)
@@ -146,20 +176,6 @@
 (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
 (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
-
-;; load misterioso theme
-(load-theme 'misterioso)
-
-;; if macos
-(if (eq system-type 'darwin)
-  ;; map the emacs meta (M) key to the command kb key
-  (setq mac-command-modifier 'meta))
-(put 'upcase-region 'disabled nil)
-
-;disable backup
-(setq backup-inhibited t)
-;disable auto save
-(setq auto-save-default nil)
 
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin")))
@@ -215,30 +231,12 @@
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
-;; Highlights matching parenthesis
-(show-paren-mode 1)
 ;; Stop on the first error.
 (setq compilation-scroll-output 'first-error)
 ;; Don't stop on info or warnings.
 (setq compilation-skip-threshold 2)
 ;; jump to first compilation error
 (setq compilation-auto-jump-to-first-error t)
-
-
-; Set cursor color to green
-(set-cursor-color "#9EFF00")
-
-(set-face-attribute 'mode-line nil
-                    :background "#9EFF00"
-                    :foreground "black"
-                    :overline nil
-                    :underline nil)
-
-(set-face-attribute 'mode-line-inactive nil
-                    :background "#565063"
-                    :foreground "white"
-                    :overline nil
-                    :underline nil)
 
 (defun kill-compilation-buffer-if-successful (buffer string)
  "Bury a compilation buffer if succeeded without warnings "
@@ -267,7 +265,4 @@
 
 (require 'lsp-java)
 (add-hook 'java-wmode-hook #'lsp)
-
-(global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
-(global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
 
