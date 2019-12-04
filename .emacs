@@ -242,6 +242,15 @@
   ;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   )
 
+(use-package modern-cpp-font-lock
+  :diminish modern-c++-font-lock-mode
+  :hook
+  (c++-mode . modern-c++-font-lock-mode))
+
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
+
 ;; map ibuffer command to C-x C-b
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
