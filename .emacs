@@ -50,8 +50,8 @@
 
 ;; Don't use the weird setup with the control panel in a separate frame.
 (setq ediff-window-setup-function #'ediff-setup-windows-plain)
-;; Split the windows horizontally instead of horizontally
-(setq ediff-split-window-function #'split-window-vertically)
+;; Split the windows horizontally instead of vertically
+(setq ediff-split-window-function #'split-window-horizontally)
 ;; When you quit an Ediff session it just leaves the two diff windows around,
 ;; instead of restoring the window configuration from when Ediff was started.
 ;; Here's the (slightly hacky) code to restore the old window configuration.
