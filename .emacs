@@ -133,6 +133,14 @@
   :config
   (pinentry-start))
 
+(use-package function-args
+  :config
+  (fa-config-default)
+  (set-default 'semantic-case-fold t)
+  ;; Todo check how to set this
+  ;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+  )
+
 ;; map ibuffer command to C-x C-b
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -163,7 +171,6 @@
  helm-gtags-suggested-key-mapping t
  )
 
-(require 'function-args)
 (add-hook 'dired-mode-hook 'helm-gtags-mode)
 (add-hook 'eshell-mode-hook 'helm-gtags-mode)
 (add-hook 'c-mode-hook 'helm-gtags-mode)
