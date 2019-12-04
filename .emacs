@@ -132,6 +132,7 @@
   (require 'use-package))
 
 (use-package whitespace
+  :ensure t
   :init
   (setq-default whitespace-style '(face tab-mark lines-tail trailing))
   (setq-default whitespace-line-column 120)
@@ -141,18 +142,22 @@
 
 ;; use smooth scrolling in buffers
 (use-package smooth-scrolling
+  :ensure t
   :config
   (smooth-scrolling-mode t))
 
 (use-package disable-mouse
+  :ensure t
   :config
   (global-disable-mouse-mode t))
 
 (use-package magit
+  :ensure t
   :bind ("C-x g" . magit-status))
 
 ;; TODO check if loading after magit is really needed
 (use-package magit-todos
+  :ensure t
   :after magit
   :config
   (magit-todos-mode t))
@@ -174,21 +179,26 @@
     (c-set-offset 'statement-case-open 0)))
 
 (use-package undo-tree
+  :ensure t
   :config
   (global-undo-tree-mode t))
 
 (use-package call-graph
+  :ensure t
   :bind ("C-c C-g" . call-graph))
 
 (use-package expand-region
+  :ensure t
   :bind ("C-=" . er/expand-region))
 
 (use-package autopair
+  :ensure t
   :config
   ;; enable autopair in all buffers
   (autopair-global-mode))
 
 (use-package pinentry
+  :ensure t
   :init
   (setq epa-pinentry-mode 'loopback)
   :config
