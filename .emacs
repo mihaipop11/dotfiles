@@ -99,8 +99,8 @@
 
 ;; if macos
 (if (eq system-type 'darwin)
-  ;; map the emacs meta (M) key to the command kb key
-  (setq mac-command-modifier 'meta))
+    ;; map the emacs meta (M) key to the command kb key
+    (setq mac-command-modifier 'meta))
 (put 'upcase-region 'disabled nil)
 
 ;; automatically switch point to the newly created splitted window
@@ -150,11 +150,11 @@
     :ensure t
     :init
     (add-hook 'c-mode-common-hook
-      (lambda ()
-        (google-set-c-style)
-        ;; If you want the RETURN key to go to the next
-        ;; line and space over to the right place
-        (google-make-newline-indent)))
+              (lambda ()
+                (google-set-c-style)
+                ;; If you want the RETURN key to go to the next
+                ;; line and space over to the right place
+                (google-make-newline-indent)))
     :config
     (c-set-offset 'statement-case-open 0)))
 
@@ -203,9 +203,9 @@
          ("M-s" . counsel-etags-find-tag))
   :init
   (add-hook 'prog-mode-hook
-    (lambda ()
-      (add-hook 'after-save-hook
-                'counsel-etags-virtual-update-tags 'append 'local)))
+            (lambda ()
+              (add-hook 'after-save-hook
+                        'counsel-etags-virtual-update-tags 'append 'local)))
   :config
   ;; Ignore files above 800kb
   ;; (setq counsel-etags-max-file-size 800)
@@ -253,6 +253,52 @@
   ;; (projectile-switch-project-action 'helm-projectile)
   )
 
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode))
+
+(use-package irony
+  :ensure t
+  :config
+  :commands irony-install-server
+  ;; standard irony configuration
+  :bind (:map irony-mode-map
+              ("C-c C-b" . irony-cdb-menu)
+              ("C-c =" . irony-get-type))
+  :after cc-mode
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+  (use-package irony-cdb)
+
+  (use-package company-irony
+    :ensure t
+    :after company
+    :config
+    (setq company-irony-ignore-case 'smart)
+    (add-to-list 'company-backends 'company-irony)
+
+    ;; (use-package company-c-headers
+    ;;   :ensure t
+    ;;   :functions irony--extract-user-search-paths company-c-headers
+    ;;   (add-to-list 'company-backends #'company-c-headers))
+    )
+
+  (use-package company-irony-c-headers
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-irony-c-headers))
+
+  (use-package flycheck-irony
+    :ensure t
+    :commands flycheck-irony-setup
+    :init
+    (add-hook 'c++-mode-hook 'flycheck-irony-setup)
+    (add-hook 'c-mode-hook 'flycheck-irony-setup)))
+
 (use-package function-args
   :config
   (fa-config-default)
@@ -272,13 +318,6 @@
   :init
   (add-hook 'c++-mode-hook 'flycheck-mode)
   (add-hook 'c-mode-hook 'flycheck-mode))
-
-(use-package flycheck-irony
-  :ensure t
-  :commands flycheck-irony-setup
-  :init
-  (add-hook 'c++-mode-hook 'flycheck-irony-setup)
-  (add-hook 'c-mode-hook 'flycheck-irony-setup))
 
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
@@ -324,23 +363,6 @@
 (setq exec-path (append exec-path '("/usr/local/bin")))
 (setq exec-path (append exec-path '("~/.cargo/bin")))
 
-;; C/C++ Autocompletion
-(require 'irony)
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-
-(require 'company-irony)
-(require 'company-irony-c-headers)
-(add-hook 'c++-mode-hook #'(lambda ()
-  (add-to-list 'company-backends 'company-irony)
-  (add-to-list 'company-backends 'company-irony-c-headers)
-  ))
-
 (require 'rust-mode)
 (require 'racer)
 ;; Rustup binaries PATH
@@ -375,8 +397,8 @@
 (setq compilation-auto-jump-to-first-error t)
 
 (defun kill-compilation-buffer-if-successful (buffer string)
- "Bury a compilation buffer if succeeded without warnings "
- (when (and
+  "Bury a compilation buffer if succeeded without warnings "
+  (when (and
          (buffer-live-p buffer)
          (string-match "compilation" (buffer-name buffer))
          (string-match "finished" string)
@@ -384,11 +406,11 @@
           (with-current-buffer buffer
             (goto-char (point-min))
             (search-forward "warning" nil t))))
-         (run-with-timer 1 nil
-          (lambda (buf)
-            (bury-buffer buf)
-            (delete-window))
-              buffer)))
+    (run-with-timer 1 nil
+                    (lambda (buf)
+                      (bury-buffer buf)
+                      (delete-window))
+                    buffer)))
 
 ;; (add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
 
