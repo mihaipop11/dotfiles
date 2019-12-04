@@ -60,46 +60,26 @@
 ;; Change the horrible ediff colors
 (add-hook 'ediff-load-hook
           (lambda ()
-            (set-face-foreground
-             ediff-current-diff-face-A "#ffffff")
-            (set-face-background
-             ediff-current-diff-face-A "#6551d4")
-            (set-face-foreground
-             ediff-fine-diff-face-A "#ffffff")
-            (make-face-bold
-             ediff-fine-diff-face-A)
-            (set-face-background
-             ediff-fine-diff-face-A "#4026a9")
-            (set-face-background
-             ediff-odd-diff-face-A "#221122")
-            (set-face-foreground
-             ediff-odd-diff-face-A "#ffffff")
-            (set-face-foreground
-             ediff-current-diff-face-B "#ffffff")
-            (set-face-background
-             ediff-current-diff-face-B "#6551d4")
-            (set-face-foreground
-             ediff-fine-diff-face-B "#ffffff")
-            (make-face-bold
-             ediff-fine-diff-face-B)
-            (set-face-background
-             ediff-fine-diff-face-B "#4026a9")
-            (set-face-background
-             ediff-odd-diff-face-B "#221122")
-            (set-face-foreground
-             ediff-odd-diff-face-B "#ffffff")
-            (set-face-background
-             ediff-odd-diff-face-A "#221122")
-            (set-face-foreground
-             ediff-odd-diff-face-A "#ffffff")
-            (set-face-background
-             ediff-even-diff-face-B "#221122")
-            (set-face-foreground
-             ediff-even-diff-face-B "#ffffff")
-            (set-face-background
-             ediff-even-diff-face-A "#221122")
-            (set-face-foreground
-             ediff-even-diff-face-A "#ffffff")
+            ;;(set-face-foreground ediff-current-diff-face-A "#ffffff")
+            (set-face-background ediff-current-diff-face-A "#155A68")
+            ;;(set-face-foreground ediff-fine-diff-face-A "#ffffff")
+            ;;(make-face-bold ediff-fine-diff-face-A)
+            (set-face-background ediff-fine-diff-face-A "#0B2F37")
+            (set-face-background ediff-odd-diff-face-A "#3D4B65")
+            ;;(set-face-foreground ediff-odd-diff-face-A "#ffffff")
+            ;;(set-face-foreground ediff-current-diff-face-B "#ffffff")
+            (set-face-background ediff-current-diff-face-B "#155A68")
+            ;;(set-face-foreground ediff-fine-diff-face-B "#ffffff")
+            ;;(make-face-bold ediff-fine-diff-face-B)
+            (set-face-background ediff-fine-diff-face-B "#0B2F37")
+            (set-face-background ediff-odd-diff-face-B "#3D4B65")
+            ;;(set-face-foreground ediff-odd-diff-face-B "#ffffff")
+            (set-face-background ediff-odd-diff-face-A "#3D4B65")
+            ;;(set-face-foreground ediff-odd-diff-face-A "#ffffff")
+            (set-face-background ediff-even-diff-face-B "#3D4B65")
+            ;;(set-face-foreground ediff-even-diff-face-B "#ffffff")
+            (set-face-background ediff-even-diff-face-A "#3D4B65")
+            ;;(set-face-foreground ediff-even-diff-face-A "#ffffff")
             ))
 
 ;; Set cursor color to green
