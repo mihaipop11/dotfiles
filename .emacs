@@ -133,6 +133,18 @@
   :config
   (pinentry-start))
 
+(use-package projectile
+  :ensure t
+  ;; :pin melpa-stable
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1)
+  :custom
+  (projectile-completion-system 'ivy)
+  ;; (projectile-switch-project-action 'helm-projectile)
+  )
+
 (use-package function-args
   :config
   (fa-config-default)
@@ -148,15 +160,6 @@
 
 ;; (global-set-key (kbd "M-f") 'forward-to-word)
 ;; (global-set-key (kbd "M-b") 'backward-to-word)
-
-(require 'projectile)
-(helm-projectile-on)
-(projectile-global-mode)
-;; redefine projectile key bindings
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(setq projectile-completpion-system 'helm)
-(setq projectile-switch-project-action 'helm-projectile)
 
 (require 'helm-config)
 (require 'helm-gtags)
