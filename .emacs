@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (counsel use-package magit-todos flycheck-rtags flycheck-irony lsp-java flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args helm-gtags disable-mouse edit-indirect markdown-mode magit helm helm-projectile smooth-scrolling))))
+    (counsel-etags counsel use-package magit-todos flycheck-rtags flycheck-irony lsp-java flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args helm-gtags disable-mouse edit-indirect markdown-mode magit helm helm-projectile smooth-scrolling))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -198,6 +198,32 @@
   :custom
   (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git"))
 
+(use-package counsel-etags
+  :ensure t
+  :bind (("M-." . counsel-etags-find-tag-at-point)
+         ("M-t" . counsel-etags-grep-symbol-at-point)
+         ("M-s" . counsel-etags-find-tag))
+  :init
+  (add-hook 'prog-mode-hook
+    (lambda ()
+      (add-hook 'after-save-hook
+                'counsel-etags-virtual-update-tags 'append 'local)))
+  :config
+  ;; Ignore files above 800kb
+  ;; (setq counsel-etags-max-file-size 800)
+  ;; Don't ask before rereading the TAGS files if they have changed
+  (setq tags-revert-without-query t)
+  ;; Don't warn when TAGS files are large
+  (setq large-file-warning-threshold nil)
+  ;; How many seconds to wait before rerunning tags for auto-update
+  (setq counsel-etags-update-interval 10)
+
+  ;; ignored files and directories
+  (add-to-list 'counsel-etags-ignore-directories "build")
+  (add-to-list 'counsel-etags-ignore-directories ".vscode")
+  (add-to-list 'counsel-etags-ignore-filenames ".clang-format")
+  )
+
 ;; todo check swiper dependency to ivy and if one should start before the other
 (use-package swiper
   :ensure t
@@ -373,4 +399,3 @@
 
 (require 'lsp-java)
 (add-hook 'java-wmode-hook #'lsp)
-
