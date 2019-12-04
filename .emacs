@@ -13,10 +13,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(helm-completion-style (quote emacs))
  '(package-selected-packages
    (quote
-    (use-package magit-todos flycheck-rtags flycheck-irony lsp-java flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args helm-gtags disable-mouse edit-indirect markdown-mode magit helm helm-projectile smooth-scrolling))))
+    (counsel use-package magit-todos flycheck-rtags flycheck-irony lsp-java flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args helm-gtags disable-mouse edit-indirect markdown-mode magit helm helm-projectile smooth-scrolling))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -133,14 +132,35 @@
   :config
   (pinentry-start))
 
+;; todo check counsel dependency to ivy and if one should start before the other
+(use-package counsel
+  :ensure t
+  :bind*
+  (("M-x" . counsel-M-x)
+   ("C-c C-m" . counsel-M-x)
+   ("C-x C-m" . counsel-M-x)
+   ("C-x m" . counsel-M-x)
+   ("C-x C-f" . counsel-find-file))
+  :custom
+  (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git"))
+
+;; todo check swiper dependency to ivy and if one should start before the other
+(use-package swiper
+  :ensure t
+  :bind (("C-s" . swiper)
+         ;; ("M-*" . swiper-under-point)
+         ))
+
 (use-package ivy
   :ensure t
+  :bind (("C-c C-r" . ivy-resume)
+         ("C-s" . swiper-isearch)
+         ("M-x" . counsel-M-x)
+         ("C-x C-f") . counsel-find-file))
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  (global-set-key (kbd "<f6>") 'ivy-resume))
 
 (use-package projectile
   :ensure t
@@ -155,17 +175,6 @@
   (projectile-completion-system 'ivy)
   ;; (projectile-switch-project-action 'helm-projectile)
   )
-
-;; (use-package counsel
-;;   :ensure t
-;;   :bind*
-;;   (("M-x" . counsel-M-x)
-;;    ("C-c C-m" . counsel-M-x)
-;;    ("C-x C-m" . counsel-M-x)
-;;    ("C-x m" . counsel-M-x)
-;;    ("C-x C-f" . counsel-find-file))
-;;   :custom
-;;   (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git"))
 
 ;; (use-package counsel-projectile
 ;;   :ensure t
