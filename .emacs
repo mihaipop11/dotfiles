@@ -48,6 +48,16 @@
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
 
+;; Don't use the weird setup with the control panel in a separate frame.
+(setq ediff-window-setup-function #'ediff-setup-windows-plain)
+;; Split the windows horizontally instead of horizontally
+(setq ediff-split-window-function #'split-window-vertically)
+;; When you quit an Ediff session it just leaves the two diff windows around,
+;; instead of restoring the window configuration from when Ediff was started.
+;; Here's the (slightly hacky) code to restore the old window configuration.
+(winner-mode)
+(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+
 ;; Set cursor color to green
 (set-cursor-color "#9EFF00")
 ;; Set active modeline color to green
