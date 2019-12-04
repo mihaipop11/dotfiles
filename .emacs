@@ -293,7 +293,17 @@
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :commands flycheck-mode
+  :init
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+  (add-hook 'c-mode-hook 'flycheck-mode))
+
+(use-package flycheck-irony
+  :ensure t
+  :commands flycheck-irony-setup
+  :init
+  (add-hook 'c++-mode-hook 'flycheck-irony-setup)
+  (add-hook 'c-mode-hook 'flycheck-irony-setup))
 
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
