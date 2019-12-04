@@ -253,11 +253,6 @@
   ;; (projectile-switch-project-action 'helm-projectile)
   )
 
-;; (use-package counsel-projectile
-;;   :ensure t
-;;   :config
-;;   (counsel-projectile-mode))
-
 (use-package function-args
   :config
   (fa-config-default)
