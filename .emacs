@@ -209,12 +209,11 @@
   :ensure t
   :bind (("C-c C-r" . ivy-resume)
          ("C-s" . swiper-isearch)
-         ("M-x" . counsel-M-x)
-         ("C-x C-f") . counsel-find-file))
+         ("M-x" . counsel-M-x))
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
+  (setq enable-recursive-minibuffers t))
 
 (use-package projectile
   :ensure t
