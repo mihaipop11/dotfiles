@@ -157,13 +157,21 @@
   :config
   (magit-todos-mode t))
 
-;; Provides the google C/C++ coding style.
-(use-package google-c-style
-  :hook ((c-mode-common)
-         ;; If you want the RETURN key to go to the next
-         ;; line and space over to the right place
-         (c-mode-common . google-make-newline-indent)
-         ))
+(use-package cc-mode
+  :defer t
+  :config
+  ;; Provides the google C/C++ coding style.
+  (use-package google-c-style
+    :ensure t
+    :init
+    (add-hook 'c-mode-common-hook
+      (lambda ()
+        (google-set-c-style)
+        ;; If you want the RETURN key to go to the next
+        ;; line and space over to the right place
+        (google-make-newline-indent)))
+    :config
+    (c-set-offset 'statement-case-open 0)))
 
 (use-package undo-tree
   :config
