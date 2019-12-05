@@ -1,3 +1,4 @@
+
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -15,7 +16,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (projectile counsel-etags counsel use-package magit-todos flycheck-rtags flycheck-irony lsp-java flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args disable-mouse edit-indirect markdown-mode magit smooth-scrolling))))
+    (swiper counsel-gtags ggtags company-c-headers modern-cpp-font-lock projectile counsel-etags counsel use-package magit-todos flycheck-rtags flycheck-irony lsp-java flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args disable-mouse edit-indirect markdown-mode magit smooth-scrolling))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -196,30 +197,64 @@
   :custom
   (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git"))
 
-(use-package counsel-etags
-  :ensure t
-  :bind (("M-." . counsel-etags-find-tag-at-point)
-         ("M-t" . counsel-etags-grep-symbol-at-point)
-         ("M-s" . counsel-etags-find-tag))
-  :init
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook
-                        'counsel-etags-virtual-update-tags 'append 'local)))
-  :config
-  ;; Ignore files above 800kb
-  ;; (setq counsel-etags-max-file-size 800)
-  ;; Don't ask before rereading the TAGS files if they have changed
-  (setq tags-revert-without-query t)
-  ;; Don't warn when TAGS files are large
-  (setq large-file-warning-threshold nil)
-  ;; How many seconds to wait before rerunning tags for auto-update
-  (setq counsel-etags-update-interval 10)
+;; (use-package counsel-etags
+;;   :ensure t
+;;   :bind (("M-." . counsel-etags-find-tag-at-point)
+;;          ("M-t" . counsel-etags-grep-symbol-at-point)
+;;          ("M-s" . counsel-etags-find-tag))
+;;   :init
+;;   (add-hook 'prog-mode-hook
+;;             (lambda ()
+;;               (add-hook 'after-save-hook
+;;                         'counsel-etags-virtual-update-tags 'append 'local)))
+;;   :config
+;;   ;; Ignore files above 800kb
+;;   ;; (setq counsel-etags-max-file-size 800)
+;;   ;; Don't ask before rereading the TAGS files if they have changed
+;;   (setq tags-revert-without-query t)
+;;   ;; Don't warn when TAGS files are large
+;;   (setq large-file-warning-threshold nil)
+;;   ;; How many seconds to wait before rerunning tags for auto-update
+;;   (setq counsel-etags-update-interval 60)
 
-  ;; ignored files and directories
-  (add-to-list 'counsel-etags-ignore-directories "build")
-  (add-to-list 'counsel-etags-ignore-directories ".vscode")
-  (add-to-list 'counsel-etags-ignore-filenames ".clang-format")
+;;   ;; ignored files and directories
+;;   (add-to-list 'counsel-etags-ignore-directories "build")
+;;   (add-to-list 'counsel-etags-ignore-directories ".vscode")
+;;   (add-to-list 'counsel-etags-ignore-filenames ".clang-format")
+;;   )
+
+(use-package ggtags
+  :ensure t
+  :commands ggtags-mode)
+:init
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+              (ggtags-mode t))))
+;; (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
+;; (define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
+;; (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+;; (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+;; (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+;; (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+;; (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+
+(use-package counsel-gtags
+  ;; :disabled
+  :ensure t
+  :init
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+                (counsel-gtags-mode t))))
+  :config
+  (setq counsel-gtags-auto-update t
+        counsel-gtags-path-style 'root
+        )
+  :bind (:map
+         counsel-gtags-mode-map
+         ("M-." . counsel-gtags-dwim)
+         ("M-," . counsel-gtags-go-backward))
   )
 
 ;; todo check swiper dependency to ivy and if one should start before the other
@@ -281,10 +316,11 @@
     (setq company-irony-ignore-case 'smart)
     (add-to-list 'company-backends 'company-irony)
 
-    ;; (use-package company-c-headers
-    ;;   :ensure t
-    ;;   :functions irony--extract-user-search-paths company-c-headers
-    ;;   (add-to-list 'company-backends #'company-c-headers))
+    (use-package company-c-headers
+      :ensure t
+      :functions irony--extract-user-search-paths company-c-headers
+      :config
+      (add-to-list 'company-backends #'company-c-headers))
     )
 
   (use-package company-irony-c-headers
@@ -308,6 +344,7 @@
   )
 
 (use-package modern-cpp-font-lock
+  :ensure t
   :diminish modern-c++-font-lock-mode
   :hook
   (c++-mode . modern-c++-font-lock-mode))
