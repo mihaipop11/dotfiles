@@ -49,6 +49,10 @@
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
 
+;; Split window preferred function: vertically
+(setq split-height-threshold nil)
+(setq split-width-threshold 160)
+
 ;; Don't use the weird setup with the control panel in a separate frame.
 (setq ediff-window-setup-function #'ediff-setup-windows-plain)
 ;; Split the windows horizontally instead of vertically
