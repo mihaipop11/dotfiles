@@ -180,14 +180,12 @@
 
 (use-package magit
   :ensure t
-  :pin melpa-stable
   :bind ("C-x g" . magit-status)
   )
 
 ;; TODO check if loading after magit is really needed
 (use-package magit-todos
   :ensure t
-  :pin melpa-stable
   :after magit
   :config
   (magit-todos-mode t)
