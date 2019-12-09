@@ -260,6 +260,9 @@
         )
   :bind (:map
          counsel-gtags-mode-map
+         ("M-t" . counsel-gtags-find-definition)
+         ("M-r" . counsel-gtags-find-reference)
+         ("M-s" . counsel-gtags-find-symbol)
          ("M-." . counsel-gtags-dwim)
          ("M-," . counsel-gtags-go-backward))
   )
