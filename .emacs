@@ -18,7 +18,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (swiper counsel-gtags ggtags company-c-headers modern-cpp-font-lock projectile counsel-etags counsel use-package magit-todos flycheck-rtags flycheck-irony lsp-java flycheck pinentry expand-region call-graph google-c-style undo-tree company-irony-c-headers autopair flycheck-rust racer rust-mode company-irony irony company-lsp function-args disable-mouse edit-indirect markdown-mode magit smooth-scrolling))))
+    (racer company-racer flycheck-rust flycheck-irony company-irony-c-headers company-c-headers company-irony google-c-style rust-mode flycheck modern-cpp-font-lock function-args irony company projectile counsel-gtags counsel pinentry autopair expand-region undo-tree magit-todos magit disable-mouse smooth-scrolling use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
