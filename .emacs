@@ -113,6 +113,46 @@
 (global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
 (global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
 
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
+
+;; Switch between cpp and header in C/C++ major mode
+(eval-after-load "cc-mode"
+  '(progn
+     (define-key c-mode-map   (kbd "C-c o") 'ff-find-other-file)
+     (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)))
+
+;; map ibuffer command to C-x C-b
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; Stop on the first error.
+(setq compilation-scroll-output 'first-error)
+;; Don't stop on info or warnings.
+(setq compilation-skip-threshold 2)
+;; jump to first compilation error
+(setq compilation-auto-jump-to-first-error t)
+
+(global-set-key (kbd "C-c b") 'projectile-compile-project)
+
+(defun kill-compilation-buffer-if-successful (buffer string)
+  "Bury a compilation buffer if succeeded without warnings "
+  (when (and
+         (buffer-live-p buffer)
+         (string-match "compilation" (buffer-name buffer))
+         (string-match "finished" string)
+         (not
+          (with-current-buffer buffer
+            (goto-char (point-min))
+            (search-forward "warning" nil t))))
+    (run-with-timer 1 nil
+                    (lambda (buf)
+                      (bury-buffer buf)
+                      (delete-window))
+                    buffer)))
+;; (add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
+
+
 (eval-when-compile
   (require 'use-package))
 
@@ -367,15 +407,6 @@
   (add-hook 'c++-mode-hook 'flycheck-mode)
   (add-hook 'c-mode-hook 'flycheck-mode))
 
-(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
-
-;; map ibuffer command to C-x C-b
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(global-set-key (kbd "C-c b") 'projectile-compile-project)
-
 ;; (global-set-key (kbd "M-f") 'forward-to-word)
 ;; (global-set-key (kbd "M-b") 'backward-to-word)
 
@@ -424,35 +455,32 @@
     )
   (add-hook 'rust-mode-hook 'my-rust-mode-hook)
   (add-hook 'rust-mode-hook #'racer-mode)
-  )
 
-(use-package flycheck-rust
-  :ensure t
-  :defer t
-  :after rust-mode
-  )
+  (use-package flycheck-rust
+    :ensure t
+    :defer t
+    )
 
-(use-package company-racer
-  :ensure t
-  :defer t
-  :after rust-mode
-  )
+  (use-package company-racer
+    :ensure t
+    :defer t
+    )
 
-(use-package racer
-  :ensure t
-  :defer t
-  :after rust-mode
-  :init
-  (setq racer-rust-src-path (concat (getenv "HOME")
-                                    "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
-  (setq racer-cmd (concat (getenv "HOME")
-                          "~/.cargo/bin/racer"))
-  :config
-  (define-key rust-mode-map (kbd "M-.") #'racer-find-definition)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
-  (setq company-tooltip-align-annotations t)
+  (use-package racer
+    :ensure t
+    :defer t
+    :init
+    (setq racer-rust-src-path (concat (getenv "HOME")
+                                      "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
+    (setq racer-cmd (concat (getenv "HOME")
+                            "~/.cargo/bin/racer"))
+    :config
+    (define-key rust-mode-map (kbd "M-.") #'racer-find-definition)
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (add-hook 'racer-mode-hook #'company-mode)
+    (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
+    (setq company-tooltip-align-annotations t)
+    )
   )
 
 (require 'flycheck-rtags)
@@ -465,38 +493,6 @@
 
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-;; Stop on the first error.
-(setq compilation-scroll-output 'first-error)
-;; Don't stop on info or warnings.
-(setq compilation-skip-threshold 2)
-;; jump to first compilation error
-(setq compilation-auto-jump-to-first-error t)
-
-(defun kill-compilation-buffer-if-successful (buffer string)
-  "Bury a compilation buffer if succeeded without warnings "
-  (when (and
-         (buffer-live-p buffer)
-         (string-match "compilation" (buffer-name buffer))
-         (string-match "finished" string)
-         (not
-          (with-current-buffer buffer
-            (goto-char (point-min))
-            (search-forward "warning" nil t))))
-    (run-with-timer 1 nil
-                    (lambda (buf)
-                      (bury-buffer buf)
-                      (delete-window))
-                    buffer)))
-
-;; (add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
-
-;; Switch between cpp and header in C/C++ major mode
-(eval-after-load "cc-mode"
-  '(progn
-     (define-key c-mode-map   (kbd "C-c o") 'ff-find-other-file)
-     (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)))
-
 
 (require 'lsp-java)
 (add-hook 'java-wmode-hook #'lsp)
