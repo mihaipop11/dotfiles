@@ -405,28 +405,57 @@
 ;; (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 ;; (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-(setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin")))
+(use-package rust-mode
+  :ensure t
+  :defer t
+  :init
+  (global-company-mode)
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  (setq exec-path (append exec-path '("/usr/local/bin")))
+  (setq exec-path (append exec-path '("~/.cargo/bin")))
+  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+  (setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin")))
+  :config
+  (defun my-rust-mode-hook()
+    (set (make-local-variable 'compile-command "cargo run"))
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+    ;;(set (make-local-variable 'company-backends) '(company-racer))
+    ;;(local-set-key (kbd "TAB") #'racer-complete-or-indent)
+    )
+  (add-hook 'rust-mode-hook 'my-rust-mode-hook)
+  (add-hook 'rust-mode-hook #'racer-mode)
+  )
 
-(setq exec-path (append exec-path '("/usr/local/bin")))
-(setq exec-path (append exec-path '("~/.cargo/bin")))
+(use-package flycheck-rust
+  :ensure t
+  :defer t
+  :after rust-mode
+  )
 
-(require 'rust-mode)
-(require 'racer)
-;; Rustup binaries PATH
-(setq racer-cmd "~/.cargo/bin/racer")
-;; Rust source code PATH
-(setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src")
+(use-package company-racer
+  :ensure t
+  :defer t
+  :after rust-mode
+  )
 
-(require 'flycheck-rust)
-
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(use-package racer
+  :ensure t
+  :defer t
+  :after rust-mode
+  :init
+  (setq racer-rust-src-path (concat (getenv "HOME")
+                                    "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
+  (setq racer-cmd (concat (getenv "HOME")
+                          "~/.cargo/bin/racer"))
+  :config
+  (define-key rust-mode-map (kbd "M-.") #'racer-find-definition)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode)
+  (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
+  (setq company-tooltip-align-annotations t)
+  )
 
 (require 'flycheck-rtags)
-
 (defun my-flycheck-rtags-setup ()
   (flycheck-select-checker 'rtags)
   (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
