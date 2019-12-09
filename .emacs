@@ -330,14 +330,12 @@
 ;; todo check swiper dependency to ivy and if one should start before the other
 (use-package swiper
   :ensure t
-  :pin melpa-stable
   :bind (("C-s" . swiper)
          ("M-*" . swiper-under-point))
   )
 
 (use-package ivy
   :ensure t
-  :pin melpa-stable
   :bind ("C-c C-r" . ivy-resume)
   :config
   (ivy-mode 1)
