@@ -376,10 +376,6 @@
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-  (use-package irony-cdb
-    :ensure t
-    )
-
   (use-package company-irony
     :ensure t
     :after company
