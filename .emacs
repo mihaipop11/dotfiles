@@ -346,6 +346,7 @@
     (add-hook 'c-mode-hook 'flycheck-irony-setup)))
 
 (use-package function-args
+  :ensure t
   :config
   (fa-config-default)
   (set-default 'semantic-case-fold t)
