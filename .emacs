@@ -113,10 +113,6 @@
 (global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
 (global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
 
-(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
-
 ;; Switch between cpp and header in C/C++ major mode
 (eval-after-load "cc-mode"
   '(progn
@@ -154,7 +150,8 @@
 
 
 (eval-when-compile
-  (require 'use-package))
+  (require 'use-package)
+  )
 
 (use-package whitespace
   :ensure t
@@ -163,33 +160,41 @@
   (setq-default whitespace-line-column 120)
   (setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode))
   :config
-  (global-whitespace-mode t))
+  (global-whitespace-mode t)
+  )
 
 ;; use smooth scrolling in buffers
 (use-package smooth-scrolling
   :ensure t
   :config
-  (smooth-scrolling-mode t))
+  (smooth-scrolling-mode t)
+  )
 
 (use-package disable-mouse
   :ensure t
   :config
-  (global-disable-mouse-mode t))
+  (global-disable-mouse-mode t)
+  )
 
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status))
+  :bind ("C-x g" . magit-status)
+  )
 
 ;; TODO check if loading after magit is really needed
 (use-package magit-todos
   :ensure t
   :after magit
   :config
-  (magit-todos-mode t))
+  (magit-todos-mode t)
+  )
 
 (use-package cc-mode
   :defer t
   :config
+  (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+  (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
+  (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
   ;; Provides the google C/C++ coding style.
   (use-package google-c-style
     :ensure t
@@ -201,33 +206,41 @@
                 ;; line and space over to the right place
                 (google-make-newline-indent)))
     :config
-    (c-set-offset 'statement-case-open 0)))
+    (c-set-offset 'statement-case-open 0)
+    )
+  )
 
 (use-package undo-tree
   :ensure t
   :config
-  (global-undo-tree-mode t))
+  (global-undo-tree-mode t)
+  )
 
 (use-package call-graph
+  :disable
   :ensure t
-  :bind ("C-c C-g" . call-graph))
+  :bind ("C-c C-g" . call-graph)
+  )
 
 (use-package expand-region
   :ensure t
-  :bind ("C-=" . er/expand-region))
+  :bind ("C-=" . er/expand-region)
+  )
 
 (use-package autopair
   :ensure t
   :config
   ;; enable autopair in all buffers
-  (autopair-global-mode))
+  (autopair-global-mode)
+  )
 
 (use-package pinentry
   :ensure t
   :init
   (setq epa-pinentry-mode 'loopback)
   :config
-  (pinentry-start))
+  (pinentry-start)
+  )
 
 ;; todo check counsel dependency to ivy and if one should start before the other
 (use-package counsel
@@ -239,7 +252,8 @@
    ("C-x m" . counsel-M-x)
    ("C-x C-f" . counsel-find-file))
   :custom
-  (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git"))
+  (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git")
+  )
 
 (use-package counsel-etags
   :disabled ;; Using counsel-gtags instead
@@ -283,7 +297,8 @@
   (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
   (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
   (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
-  (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark))
+  (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+  )
 
 (use-package counsel-gtags
   ;; :disabled
@@ -312,8 +327,8 @@
   :ensure t
   :pin melpa-stable
   :bind (("C-s" . swiper)
-         ("M-*" . swiper-under-point)
-         ))
+         ("M-*" . swiper-under-point))
+  )
 
 (use-package ivy
   :ensure t
@@ -322,7 +337,8 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t))
+  (setq enable-recursive-minibuffers t)
+  )
 
 (use-package projectile
   :ensure t
@@ -341,7 +357,8 @@
 (use-package company
   :ensure t
   :init
-  (global-company-mode))
+  (global-company-mode)
+  )
 
 (use-package irony
   :ensure t
@@ -357,7 +374,9 @@
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-  (use-package irony-cdb)
+  (use-package irony-cdb
+    :ensure t
+    )
 
   (use-package company-irony
     :ensure t
@@ -370,20 +389,24 @@
       :ensure t
       :functions irony--extract-user-search-paths company-c-headers
       :config
-      (add-to-list 'company-backends #'company-c-headers))
+      (add-to-list 'company-backends #'company-c-headers)
+      )
     )
 
   (use-package company-irony-c-headers
     :ensure t
     :config
-    (add-to-list 'company-backends 'company-irony-c-headers))
+    (add-to-list 'company-backends 'company-irony-c-headers)
+    )
 
   (use-package flycheck-irony
     :ensure t
     :commands flycheck-irony-setup
     :init
     (add-hook 'c++-mode-hook 'flycheck-irony-setup)
-    (add-hook 'c-mode-hook 'flycheck-irony-setup)))
+    (add-hook 'c-mode-hook 'flycheck-irony-setup)
+    )
+  )
 
 (use-package function-args
   :ensure t
@@ -398,14 +421,16 @@
   :ensure t
   :diminish modern-c++-font-lock-mode
   :hook
-  (c++-mode . modern-c++-font-lock-mode))
+  (c++-mode . modern-c++-font-lock-mode)
+  )
 
 (use-package flycheck
   :ensure t
   :commands flycheck-mode
   :init
   (add-hook 'c++-mode-hook 'flycheck-mode)
-  (add-hook 'c-mode-hook 'flycheck-mode))
+  (add-hook 'c-mode-hook 'flycheck-mode)
+  )
 
 ;; (global-set-key (kbd "M-f") 'forward-to-word)
 ;; (global-set-key (kbd "M-b") 'backward-to-word)
