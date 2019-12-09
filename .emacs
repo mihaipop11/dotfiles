@@ -217,7 +217,7 @@
   )
 
 (use-package call-graph
-  :disable
+  :disabled
   :ensure t
   :bind ("C-c C-g" . call-graph)
   )
