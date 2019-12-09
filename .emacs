@@ -247,7 +247,7 @@
 ;; todo check counsel dependency to ivy and if one should start before the other
 (use-package counsel
   :ensure t
-  :pin melpa-stable
+  ;;:pin melpa-stable
   :bind*
   (("M-x" . counsel-M-x)
    ("C-c C-m" . counsel-M-x)
