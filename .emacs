@@ -265,16 +265,14 @@
 (use-package swiper
   :ensure t
   :bind (("C-s" . swiper)
-         ;; ("M-*" . swiper-under-point)
+         ("M-*" . swiper-under-point)
          ))
 
 (use-package ivy
   :ensure t
-  :bind (("C-c C-r" . ivy-resume)
-         ("C-s" . swiper-isearch)
-         ("M-x" . counsel-M-x))
+  :bind ("C-c C-r" . ivy-resume)
   :config
-  (ivy-mode t)
+  (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t))
 
