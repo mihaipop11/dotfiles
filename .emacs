@@ -345,7 +345,7 @@
 
 (use-package projectile
   :ensure t
-  :pin melpa-stable
+  ;; :pin melpa-stable
   ;; :bind* ((:map projectile-mode-map("C-c p" . projectile-command-map))
   ;;         (:map projectile-mode-map("s-p" . projectile-command-map)))
   :config
