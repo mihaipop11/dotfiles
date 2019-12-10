@@ -532,6 +532,20 @@
     )
   )
 
+;; company-jedi wires up jedi to be a backend for the auto completion
+;; library, company-mode.
+(use-package company-jedi
+  :ensure t
+  :config
+  :hook
+  ((python-mode . jedi:setup))
+  :init
+  (setq jedi:complete-on-dot t)
+  (setq jedi:use-shortcuts t)
+  (add-hook 'python-mode-hook
+            (lambda () (add-to-list 'company-backends 'company-jedi)))
+  )
+
 ;; (require 'flycheck-rtags)
 ;; (defun my-flycheck-rtags-setup ()
 ;;   (flycheck-select-checker 'rtags)
