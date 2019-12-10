@@ -18,7 +18,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (racer company-racer flycheck-rust flycheck-irony company-irony-c-headers company-c-headers company-irony google-c-style rust-mode flycheck modern-cpp-font-lock function-args irony company projectile counsel-gtags counsel pinentry autopair expand-region undo-tree magit-todos magit disable-mouse smooth-scrolling use-package))))
+    (cmake-ide racer company-racer flycheck-rust flycheck-irony company-irony-c-headers company-c-headers company-irony google-c-style rust-mode flycheck modern-cpp-font-lock function-args irony company projectile counsel-gtags counsel pinentry autopair expand-region undo-tree magit-todos magit disable-mouse smooth-scrolling use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -414,6 +414,16 @@
   :bind (("<backtab>" . company-complete-common-or-cycle))
   :config
   ;;(delete 'company-backends 'company-clang)
+  )
+
+(use-package cmake-ide
+  :ensure t
+  :init
+  (use-package semantic/bovine/gcc)
+  (setq cmake-ide-flags-c++ (append '("-std=c++20")
+                                  (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c++"))))
+  (setq cmake-ide-flags-c (append (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c"))))
+  (cmake-ide-setup)
   )
 
 (use-package function-args
