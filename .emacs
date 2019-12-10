@@ -43,7 +43,12 @@
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
 ;; load misterioso theme
-(load-theme 'misterioso)
+;;(load-theme 'misterioso)
+;;(load-theme 'ark-dark)
+(use-package arc-dark-theme
+  :config (load-theme 'arc-dark t)
+  )
+
 ;; disable backup
 (setq backup-inhibited t)
 ;; disable auto save
