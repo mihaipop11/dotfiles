@@ -44,7 +44,6 @@
 (setq-default c-basic-offset 4)
 ;; load misterioso theme
 ;;(load-theme 'misterioso)
-;;(load-theme 'ark-dark)
 (use-package arc-dark-theme
   :ensure t
   :config (load-theme 'arc-dark t)
