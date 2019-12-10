@@ -165,7 +165,7 @@
   :init
   (setq-default whitespace-style '(face tab-mark lines-tail trailing))
   (setq-default whitespace-line-column 120)
-  (setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode))
+  (setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode python-mode))
   :config
   (global-whitespace-mode t)
   )
