@@ -18,7 +18,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (counsel-projectile cmake-ide racer company-racer flycheck-rust flycheck-irony company-irony-c-headers company-c-headers company-irony google-c-style rust-mode flycheck modern-cpp-font-lock function-args irony company projectile counsel-gtags counsel pinentry autopair expand-region undo-tree magit-todos magit disable-mouse smooth-scrolling use-package))))
+    (company-jedi counsel-projectile cmake-ide racer company-racer flycheck-rust flycheck-irony company-irony-c-headers company-c-headers company-irony google-c-style rust-mode flycheck modern-cpp-font-lock function-args irony company projectile counsel-gtags counsel pinentry autopair expand-region undo-tree magit-todos magit disable-mouse smooth-scrolling use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
