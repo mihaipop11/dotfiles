@@ -355,12 +355,6 @@
   ;; (projectile-switch-project-action 'helm-projectile)
   )
 
-(use-package company
-  :ensure t
-  :init
-  (global-company-mode)
-  )
-
 (use-package irony
   :ensure t
   :config
@@ -369,20 +363,15 @@
   :bind (:map irony-mode-map
               ("C-c C-b" . irony-cdb-menu)
               ("C-c =" . irony-get-type))
-  :after cc-mode
   :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
   (use-package company-irony
     :ensure t
-    :after company
     :config
     (setq company-irony-ignore-case 'smart)
     (add-to-list 'company-backends 'company-irony)
 
     (use-package company-c-headers
+      :disabled
       :ensure t
       :functions irony--extract-user-search-paths company-c-headers
       :config
@@ -403,6 +392,28 @@
     (add-hook 'c++-mode-hook 'flycheck-irony-setup)
     (add-hook 'c-mode-hook 'flycheck-irony-setup)
     )
+
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'objc-mode-hook 'irony-mode)
+  ;; replace the `completion-at-point' and `complete-symbol' bindings in
+  ;; irony-mode's buffers by irony-mode's function
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  )
+
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode)
+  :bind (("<backtab>" . company-complete-common-or-cycle))
+  :config
+  ;;(delete 'company-backends 'company-clang)
   )
 
 (use-package function-args
