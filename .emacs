@@ -382,7 +382,6 @@
 
   :config
   (use-package company-irony
-    :disabled
     :ensure t
     :config
     (setq company-irony-ignore-case 'smart)
@@ -397,7 +396,6 @@
     )
 
   (use-package flycheck-irony
-    :disabled
     :ensure t
     :after (flycheck irony)
     :commands flycheck-irony-setup
@@ -427,14 +425,15 @@
   ;;  (delete 'company-backends 'company-clang)
 
   (use-package company-c-headers
+    :disabled
     :ensure t
     :functions company-c-headers
     :config
     (add-to-list 'company-backends 'company-c-headers)
     )
 
-  (setq company-backends '(company-c-headers
-                           (company-gtags)))
+  ;;(setq company-backends '(company-c-headers
+  ;;                         (company-gtags)))
   )
 
 (use-package cmake-ide
