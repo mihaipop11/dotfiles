@@ -190,6 +190,7 @@
 
 ;; TODO check if loading after magit is really needed
 (use-package magit-todos
+  :disabled
   :ensure t
   :after magit
   :config
@@ -368,12 +369,16 @@
 
 (use-package irony
   :ensure t
-  :config
-  :commands irony-install-server
+  :commands irony-mode
   ;; standard irony configuration
   :bind (:map irony-mode-map
               ("C-c C-b" . irony-cdb-menu)
               ("C-c =" . irony-get-type))
+  :init
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'objc-mode-hook 'irony-mode)
+
   :config
   (use-package company-irony
     :ensure t
@@ -398,15 +403,14 @@
 
   (use-package flycheck-irony
     :ensure t
+    :after (flycheck irony)
     :commands flycheck-irony-setup
     :init
     (add-hook 'c++-mode-hook 'flycheck-irony-setup)
     (add-hook 'c-mode-hook 'flycheck-irony-setup)
+    (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
     )
 
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
   ;; replace the `completion-at-point' and `complete-symbol' bindings in
   ;; irony-mode's buffers by irony-mode's function
   (defun my-irony-mode-hook ()
@@ -457,8 +461,8 @@
   :ensure t
   :commands flycheck-mode
   :init
-  (add-hook 'c++-mode-hook 'flycheck-mode)
-  (add-hook 'c-mode-hook 'flycheck-mode)
+  ;; (add-hook 'c++-mode-hook 'flycheck-mode)
+  ;; (add-hook 'c-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
   )
 
