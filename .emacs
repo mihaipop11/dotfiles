@@ -382,27 +382,22 @@
 
   :config
   (use-package company-irony
+    :disabled
     :ensure t
     :config
     (setq company-irony-ignore-case 'smart)
     (add-to-list 'company-backends 'company-irony)
 
-    (use-package company-c-headers
+    (use-package company-irony-c-headers
       :disabled
       :ensure t
-      :functions irony--extract-user-search-paths company-c-headers
       :config
-      (add-to-list 'company-backends #'company-c-headers)
+      (add-to-list 'company-backends 'company-irony-c-headers)
       )
     )
 
-  (use-package company-irony-c-headers
-    :ensure t
-    :config
-    (add-to-list 'company-backends 'company-irony-c-headers)
-    )
-
   (use-package flycheck-irony
+    :disabled
     :ensure t
     :after (flycheck irony)
     :commands flycheck-irony-setup
@@ -424,11 +419,22 @@
 
 (use-package company
   :ensure t
-  :init
-  (global-company-mode)
+  :defer t
+  :init (global-company-mode)
   :bind (("<backtab>" . company-complete-common-or-cycle))
   :config
-  ;;(delete 'company-backends 'company-clang)
+  ;;  (setq company-backends (delete 'company-clang company-backends))
+  ;;  (delete 'company-backends 'company-clang)
+
+  (use-package company-c-headers
+    :ensure t
+    :functions company-c-headers
+    :config
+    (add-to-list 'company-backends 'company-c-headers)
+    )
+
+  (setq company-backends '(company-c-headers
+                           (company-gtags)))
   )
 
 (use-package cmake-ide
