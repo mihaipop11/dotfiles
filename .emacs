@@ -390,14 +390,13 @@
     (use-package company-irony-c-headers
       :disabled
       :ensure t
-      :config
+      :init
       (add-to-list 'company-backends 'company-irony-c-headers)
       )
     )
 
   (use-package flycheck-irony
     :ensure t
-    :after (flycheck irony)
     :commands flycheck-irony-setup
     :init
     (add-hook 'c++-mode-hook 'flycheck-irony-setup)
@@ -425,7 +424,6 @@
   ;;  (delete 'company-backends 'company-clang)
 
   (use-package company-c-headers
-    :disabled
     :ensure t
     :functions company-c-headers
     :config
