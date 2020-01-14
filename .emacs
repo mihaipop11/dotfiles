@@ -44,9 +44,21 @@
 (setq-default c-basic-offset 4)
 ;; load misterioso theme
 ;;(load-theme 'misterioso)
-(use-package arc-dark-theme
+(use-package underwater-theme
+  :disabled
   :ensure t
-  :config (load-theme 'arc-dark t)
+  :config (load-theme 'underwater t)
+  )
+
+(use-package seti-theme
+  :disabled
+  :ensure t
+  :config (load-theme 'seti t)
+  )
+
+(use-package sublime-themes
+  :ensure t
+  :config (load-theme 'granger t)
   )
 
 ;; disable backup
