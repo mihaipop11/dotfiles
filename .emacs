@@ -109,21 +109,6 @@
             ;;(set-face-foreground ediff-even-diff-face-A "#ffffff")
             ))
 
-;; Set cursor color to green
-(set-cursor-color "#9EFF00")
-;; Set active modeline color to green
-(set-face-attribute 'mode-line nil
-                    :background "#9EFF00"
-                    :foreground "black"
-                    :overline nil
-                    :underline nil)
-;; Set active modeline color to grey
-(set-face-attribute 'mode-line-inactive nil
-                    :background "#565063"
-                    :foreground "white"
-                    :overline nil
-                    :underline nil)
-
 ;; if macos
 (if (eq system-type 'darwin)
     ;; map the emacs meta (M) key to the command kb key
