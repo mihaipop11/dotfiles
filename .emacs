@@ -11,6 +11,16 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Install quelpa itself:
+(use-package quelpa
+  :ensure t
+  )
+
+(use-package quelpa-use-package
+  :ensure t
+  :init (setq quelpa-update-melpa-p nil)
+  :config (quelpa-use-package-activate-advice))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
