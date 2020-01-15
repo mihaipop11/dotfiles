@@ -53,11 +53,15 @@
 (setq-default display-line-numbers 'relative)
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
-;; load misterioso theme
-;;(load-theme 'misterioso)
-(use-package arc-dark-theme
+
+;; load cbrew-theme
+(use-package cbrew-theme
   :ensure t
-  :config (load-theme 'arc-dark t)
+  :quelpa (cbrew-theme
+           :fetcher github
+           :repo "mihaipop11/cbrew-theme"
+           )
+  :config (load-theme 'cbrew t)
   )
 
 ;; disable backup
