@@ -105,6 +105,9 @@
 ;; map ibuffer command to C-x C-b
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; Change all prompts to y or n
+(fset 'yes-or-no-p 'y-or-n-p)
+
 ;; Stop on the first error.
 (setq compilation-scroll-output 'first-error)
 
