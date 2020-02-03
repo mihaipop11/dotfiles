@@ -438,6 +438,8 @@ and set the focus back to Emacs frame"
 
 (use-package cmake-ide
   :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\*cmake\\*" . compilation-mode))
   :init
   (use-package semantic/bovine/gcc)
   (setq cmake-ide-flags-c++ (append '("-std=c++20")
