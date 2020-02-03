@@ -125,34 +125,27 @@
              '("*undo-tree*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . right) (size . 0.2)))
 
-
-;;(setq compilation-window-height 10)
-(defun ct/create-proper-compilation-window ()
-  "Setup the *compilation* window with custom settings."
-  (when (not (get-buffer-window "*compilation*"))
-    (save-selected-window
-      (save-excursion
-        (let* ((w (split-window-vertically))
-               (h (window-height w)))
-          (select-window w)
-          (switch-to-buffer "*compilation*")
-          ;; Reduce window height
-          (shrink-window (- h compilation-window-height))
-          ;; Prevent other buffers from displaying inside
-          (set-window-dedicated-p w t)
-          )))))
-;;(add-hook 'compilation-mode-hook 'ct/create-proper-compilation-window)
-
+;; (defun notify-compilation-result(buffer msg)
+;;   "Notify that the compilation is finished,
+;; close the *compilation* buffer if the compilation is successful,
+;; and set the focus back to Emacs frame"
+;;   (if (and
+;;        (string-match "^finished" msg)
+;;        (not
+;;         (with-current-buffer buffer
+;;           (goto-char (point-min))
+;;           (search-forward "warning" nil t))))
+;;       (progn
+;;         (delete-windows-on buffer))
+;;     )
+;;   (setq current-frame (car (car (cdr (current-frame-configuration)))))
+;;   (select-frame-set-input-focus current-frame)
+;;   )
 (defun notify-compilation-result(buffer msg)
   "Notify that the compilation is finished,
 close the *compilation* buffer if the compilation is successful,
 and set the focus back to Emacs frame"
-  (if (and
-       (string-match "^finished" msg)
-       (not
-        (with-current-buffer buffer
-          (goto-char (point-min))
-          (search-forward "warning" nil t))))
+  (if (string-match "^finished" msg)
       (progn
         (delete-windows-on buffer))
     )
