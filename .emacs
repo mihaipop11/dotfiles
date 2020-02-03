@@ -73,7 +73,7 @@
 
 ;; Split window preferred function: vertically
 (setq split-height-threshold nil)
-(setq split-width-threshold 160)
+(setq split-width-threshold 220)
 
 ;; Don't use the weird setup with the control panel in a separate frame.
 (setq ediff-window-setup-function #'ediff-setup-windows-plain)
