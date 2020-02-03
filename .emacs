@@ -84,30 +84,6 @@
 ;; Here's the (slightly hacky) code to restore the old window configuration.
 (winner-mode)
 (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
-;; Change the horrible ediff colors
-(add-hook 'ediff-load-hook
-          (lambda ()
-            ;;(set-face-foreground ediff-current-diff-face-A "#ffffff")
-            (set-face-background ediff-current-diff-face-A "#155A68")
-            ;;(set-face-foreground ediff-fine-diff-face-A "#ffffff")
-            ;;(make-face-bold ediff-fine-diff-face-A)
-            (set-face-background ediff-fine-diff-face-A "#0B2F37")
-            (set-face-background ediff-odd-diff-face-A "#3D4B65")
-            ;;(set-face-foreground ediff-odd-diff-face-A "#ffffff")
-            ;;(set-face-foreground ediff-current-diff-face-B "#ffffff")
-            (set-face-background ediff-current-diff-face-B "#155A68")
-            ;;(set-face-foreground ediff-fine-diff-face-B "#ffffff")
-            ;;(make-face-bold ediff-fine-diff-face-B)
-            (set-face-background ediff-fine-diff-face-B "#0B2F37")
-            (set-face-background ediff-odd-diff-face-B "#3D4B65")
-            ;;(set-face-foreground ediff-odd-diff-face-B "#ffffff")
-            (set-face-background ediff-odd-diff-face-A "#3D4B65")
-            ;;(set-face-foreground ediff-odd-diff-face-A "#ffffff")
-            (set-face-background ediff-even-diff-face-B "#3D4B65")
-            ;;(set-face-foreground ediff-even-diff-face-B "#ffffff")
-            (set-face-background ediff-even-diff-face-A "#3D4B65")
-            ;;(set-face-foreground ediff-even-diff-face-A "#ffffff")
-            ))
 
 ;; if macos
 (if (eq system-type 'darwin)
@@ -131,6 +107,7 @@
 
 ;; Stop on the first error.
 (setq compilation-scroll-output 'first-error)
+
 ;; Don't stop on info or warnings.
 (setq compilation-skip-threshold 2)
 ;; jump to first compilation error
@@ -138,22 +115,51 @@
 
 (global-set-key (kbd "C-c b") 'projectile-compile-project)
 
-(defun kill-compilation-buffer-if-successful (buffer string)
-  "Bury a compilation buffer if succeeded without warnings "
-  (when (and
-         (buffer-live-p buffer)
-         (string-match "compilation" (buffer-name buffer))
-         (string-match "finished" string)
-         (not
-          (with-current-buffer buffer
-            (goto-char (point-min))
-            (search-forward "warning" nil t))))
-    (run-with-timer 1 nil
-                    (lambda (buf)
-                      (bury-buffer buf)
-                      (delete-window))
-                    buffer)))
-;; (add-hook 'compilation-finish-functions 'kill-compilation-buffer-if-successful)
+;; Overlay windows (What does it do?)
+(add-to-list 'display-buffer-alist
+             '("*Help*" display-buffer-in-side-window))
+(add-to-list 'display-buffer-alist
+             '("*compilation*" (display-buffer-reuse-window display-buffer-in-side-window)
+               (side . bottom) (size . 0.2)))
+(add-to-list 'display-buffer-alist
+             '("*undo-tree*" (display-buffer-reuse-window display-buffer-in-side-window)
+               (side . right) (size . 0.2)))
+
+
+;;(setq compilation-window-height 10)
+(defun ct/create-proper-compilation-window ()
+  "Setup the *compilation* window with custom settings."
+  (when (not (get-buffer-window "*compilation*"))
+    (save-selected-window
+      (save-excursion
+        (let* ((w (split-window-vertically))
+               (h (window-height w)))
+          (select-window w)
+          (switch-to-buffer "*compilation*")
+          ;; Reduce window height
+          (shrink-window (- h compilation-window-height))
+          ;; Prevent other buffers from displaying inside
+          (set-window-dedicated-p w t)
+          )))))
+;;(add-hook 'compilation-mode-hook 'ct/create-proper-compilation-window)
+
+(defun notify-compilation-result(buffer msg)
+  "Notify that the compilation is finished,
+close the *compilation* buffer if the compilation is successful,
+and set the focus back to Emacs frame"
+  (if (and
+       (string-match "^finished" msg)
+       (not
+        (with-current-buffer buffer
+          (goto-char (point-min))
+          (search-forward "warning" nil t))))
+      (progn
+        (delete-windows-on buffer))
+    )
+  (setq current-frame (car (car (cdr (current-frame-configuration)))))
+  (select-frame-set-input-focus current-frame)
+  )
+(add-hook 'compilation-finish-functions 'notify-compilation-result)
 
 
 (eval-when-compile
@@ -439,7 +445,7 @@
   :init
   (use-package semantic/bovine/gcc)
   (setq cmake-ide-flags-c++ (append '("-std=c++20")
-                                  (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c++"))))
+                                    (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c++"))))
   (setq cmake-ide-flags-c (append (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c"))))
   (cmake-ide-setup)
   )
