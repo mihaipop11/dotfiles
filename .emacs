@@ -436,6 +436,22 @@ and set the focus back to Emacs frame"
   ;;                         (company-gtags)))
   )
 
+(defun db-regexp-match-p (regexps string)
+  (and string
+       (catch 'matched
+         (let ((inhibit-changing-match-data t))
+           (dolist (regexp regexps)
+             (when (string-match regexp string)
+               (throw 'matched t)))))))
+(defvar special-buffer-regexp '"[*].*cmake.*[*]"
+  "Regexp of special mode buffer names")
+(defun set_special_mode (buffer alist)
+  (interactive)
+  (if (db-regexp-match-p special-buffer-regexp (buffer-name buffer))
+  (with-current-buffer buffer
+      (special-mode))))
+(add-to-list 'display-buffer-alist '("*cmake*" . compilation-mode))
+
 (use-package cmake-ide
   :ensure t
   :config
