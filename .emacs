@@ -120,12 +120,12 @@
 
 ;; Overlay windows (What does it do?)
 (add-to-list 'display-buffer-alist
-             '("*Help*" display-buffer-in-side-window))
+             '("\\*Help\\*" display-buffer-in-side-window))
 (add-to-list 'display-buffer-alist
-             '("*compilation*" (display-buffer-reuse-window display-buffer-in-side-window)
+             '("\\*compilation\\*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . bottom) (size . 0.2)))
 (add-to-list 'display-buffer-alist
-             '("*undo-tree*" (display-buffer-reuse-window display-buffer-in-side-window)
+             '("\\*undo-tree\\*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . right) (size . 0.2)))
 
 ;; (defun notify-compilation-result(buffer msg)
