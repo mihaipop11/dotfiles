@@ -436,6 +436,14 @@ and set the focus back to Emacs frame"
   ;;                         (company-gtags)))
   )
 
+;; set propper major mode for newly created
+;; buffers without a file associated with it
+(setq-default major-mode
+              (lambda () (if buffer-file-name
+                             (fundamental-mode)
+                           (let ((buffer-file-name (buffer-name)))
+                             (set-auto-mode)))))
+
 (use-package cmake-ide
   :ensure t
   :config
