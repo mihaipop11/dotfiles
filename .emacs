@@ -444,6 +444,11 @@ and set the focus back to Emacs frame"
                            (let ((buffer-file-name (buffer-name)))
                              (set-auto-mode)))))
 
+(use-package cmake-mode
+  :ensure t
+  :mode "CMakeLists.txt"
+  )
+
 (use-package cmake-ide
   :ensure t
   :config
