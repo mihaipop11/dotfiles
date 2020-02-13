@@ -47,6 +47,8 @@
 (display-time-mode 1)
 ;; set time hour:min in 24 hour format
 (setq display-time-format "%H:%M")
+;; show column numbers in statusbar
+(setq column-number-mode t)
 ;; don't use tabs
 (setq-default indent-tabs-mode nil)
 ;; set line numbering relative to the cursor
