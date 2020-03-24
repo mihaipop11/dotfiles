@@ -66,6 +66,11 @@
   :config (load-theme 'cbrew t)
   )
 
+(if (display-graphic-p)
+    (load-theme 'mihai t)
+  (load-theme 'wheatgrass t))
+
+(setq org-image-actual-width nil)
 ;; disable backup
 (setq backup-inhibited t)
 ;; disable auto save
