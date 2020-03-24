@@ -173,8 +173,18 @@ and set the focus back to Emacs frame"
   :ensure t
   :init
   (setq-default whitespace-style '(face tab-mark lines-tail trailing))
-  (setq-default whitespace-line-column 120)
-  (setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode python-mode))
+  (setq-default whitespace-line-column 80)
+  ;; TODO next line should not be defined in this context and should match with
+  ;; the whitespace-line-column
+  (setq-default fill-column 80)
+  (setq whitespace-global-modes '
+        (c-mode
+         c++-mode
+         rust-mode
+         emacs-lisp-mode
+         python-mode
+         org-mode
+         java-mode))
   :config
   (global-whitespace-mode t)
   )
