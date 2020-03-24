@@ -132,6 +132,9 @@
              '("\\*compilation\\*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . bottom) (size . 0.2)))
 (add-to-list 'display-buffer-alist
+             '("\\*Org-Babel Error Output\\*" (display-buffer-reuse-window display-buffer-in-side-window)
+               (side . bottom) (size . 0.2)))
+(add-to-list 'display-buffer-alist
              '("\\*undo-tree\\*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . right) (size . 0.2)))
 
