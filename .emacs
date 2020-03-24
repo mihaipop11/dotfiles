@@ -68,7 +68,13 @@
 
 (if (display-graphic-p)
     (load-theme 'mihai t)
-  (load-theme 'wheatgrass t))
+  (load-theme 'wheatgrass t)
+  ;; Set active modeline color to green
+  (set-face-attribute 'mode-line nil
+                      :background "lime green"
+                      :foreground "black"
+                      :overline nil
+                      :underline nil))
 
 (setq org-image-actual-width nil)
 ;; disable backup
