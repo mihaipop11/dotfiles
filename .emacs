@@ -58,6 +58,7 @@
 
 ;; load cbrew-theme
 (use-package cbrew-theme
+  :disabled
   :ensure t
   :quelpa (cbrew-theme
            :fetcher github
@@ -65,6 +66,15 @@
            )
   :config (load-theme 'cbrew t)
   )
+
+;;(load-theme 'misterioso)
+;;(load-theme 'ark-dark)
+(use-package arc-dark-theme
+  :ensure t
+  :config (load-theme 'arc-dark t)
+  )
+
+
 
 ;; disable backup
 (setq backup-inhibited t)
