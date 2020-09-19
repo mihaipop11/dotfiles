@@ -75,7 +75,17 @@
   )
 
 
+(if (display-graphic-p)
+    (load-theme 'mihai t)
+  (load-theme 'wheatgrass t)
+  ;; Set active modeline color to green
+  (set-face-attribute 'mode-line nil
+                      :background "lime green"
+                      :foreground "black"
+                      :overline nil
+                      :underline nil))
 
+(setq org-image-actual-width nil)
 ;; disable backup
 (setq backup-inhibited t)
 ;; disable auto save
@@ -137,6 +147,9 @@
              '("\\*compilation\\*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . bottom) (size . 0.2)))
 (add-to-list 'display-buffer-alist
+             '("\\*Org-Babel Error Output\\*" (display-buffer-reuse-window display-buffer-in-side-window)
+               (side . bottom) (size . 0.2)))
+(add-to-list 'display-buffer-alist
              '("\\*undo-tree\\*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . right) (size . 0.2)))
 
@@ -178,8 +191,18 @@ and set the focus back to Emacs frame"
   :ensure t
   :init
   (setq-default whitespace-style '(face tab-mark lines-tail trailing))
-  (setq-default whitespace-line-column 120)
-  (setq whitespace-global-modes '(c-mode c++-mode rust-mode emacs-lisp-mode python-mode))
+  (setq-default whitespace-line-column 80)
+  ;; TODO next line should not be defined in this context and should match with
+  ;; the whitespace-line-column
+  (setq-default fill-column 80)
+  (setq whitespace-global-modes '
+        (c-mode
+         c++-mode
+         rust-mode
+         emacs-lisp-mode
+         python-mode
+         org-mode
+         java-mode))
   :config
   (global-whitespace-mode t)
   )
