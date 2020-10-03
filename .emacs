@@ -550,52 +550,42 @@ and set the focus back to Emacs frame"
 ;; (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
 ;; (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 
-(use-package rust-mode
+;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+(setq lsp-keymap-prefix "s-l")
+
+(use-package lsp-mode
   :ensure t
-  :defer t
   :init
-  (global-company-mode)
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-  (setq exec-path (append exec-path '("/usr/local/bin")))
+  (setenv "PATH" (concat (getenv "PATH") ":~/.cargo/bin"))
   (setq exec-path (append exec-path '("~/.cargo/bin")))
-  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-  (setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin")))
+  :hook (;; replace rust-mode with concrete major-mode(e. g. python-mode)
+         (rust-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; optionally
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+;; if you are ivy user
+(use-package lsp-ivy
+  :ensure t
+  :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs
+  :ensure t
+  :commands lsp-treemacs-errors-list)
+
+;; optionally if you want to use debugger
+(use-package dap-mode
+  :ensure t)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+;; optional if you want which-key integration
+(use-package which-key
+  :ensure t
   :config
-  (defun my-rust-mode-hook()
-    (set (make-local-variable 'compile-command "cargo run"))
-    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-    ;;(set (make-local-variable 'company-backends) '(company-racer))
-    ;;(local-set-key (kbd "TAB") #'racer-complete-or-indent)
-    )
-  (add-hook 'rust-mode-hook 'my-rust-mode-hook)
-  (add-hook 'rust-mode-hook #'racer-mode)
-
-  (use-package flycheck-rust
-    :ensure t
-    :defer t
-    )
-
-  (use-package company-racer
-    :ensure t
-    :defer t
-    )
-
-  (use-package racer
-    :ensure t
-    :defer t
-    :init
-    (setq racer-rust-src-path (concat (getenv "HOME")
-                                      "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
-    (setq racer-cmd (concat (getenv "HOME")
-                            "~/.cargo/bin/racer"))
-    :config
-    (define-key rust-mode-map (kbd "M-.") #'racer-find-definition)
-    (add-hook 'racer-mode-hook #'eldoc-mode)
-    (add-hook 'racer-mode-hook #'company-mode)
-    (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
-    (setq company-tooltip-align-annotations t)
-    )
-  )
+  (which-key-mode))
 
 ;; company-jedi wires up jedi to be a backend for the auto completion
 ;; library, company-mode.
