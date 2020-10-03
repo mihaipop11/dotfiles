@@ -140,22 +140,7 @@
              '("\\*undo-tree\\*" (display-buffer-reuse-window display-buffer-in-side-window)
                (side . right) (size . 0.2)))
 
-;; (defun notify-compilation-result(buffer msg)
-;;   "Notify that the compilation is finished,
-;; close the *compilation* buffer if the compilation is successful,
-;; and set the focus back to Emacs frame"
-;;   (if (and
-;;        (string-match "^finished" msg)
-;;        (not
-;;         (with-current-buffer buffer
-;;           (goto-char (point-min))
-;;           (search-forward "warning" nil t))))
-;;       (progn
-;;         (delete-windows-on buffer))
-;;     )
-;;   (setq current-frame (car (car (cdr (current-frame-configuration)))))
-;;   (select-frame-set-input-focus current-frame)
-;;   )
+
 (defun notify-compilation-result(buffer msg)
   "Notify that the compilation is finished,
 close the *compilation* buffer if the compilation is successful,
@@ -425,18 +410,7 @@ and set the focus back to Emacs frame"
     :init
     (add-hook 'c++-mode-hook 'flycheck-irony-setup)
     (add-hook 'c-mode-hook 'flycheck-irony-setup)
-    (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
-    )
-
-  ;; replace the `completion-at-point' and `complete-symbol' bindings in
-  ;; irony-mode's buffers by irony-mode's function
-  ;; (defun my-irony-mode-hook ()
-  ;;   (define-key irony-mode-map [remap completion-at-point]
-  ;;     'irony-completion-at-point-async)
-  ;;   (define-key irony-mode-map [remap complete-symbol]
-  ;;     'irony-completion-at-point-async))
-  ;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  )
+    (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)))
 
 (use-package company
   :ensure t
@@ -567,17 +541,3 @@ and set the focus back to Emacs frame"
   (add-hook 'python-mode-hook
             (lambda () (add-to-list 'company-backends 'company-jedi)))
   )
-
-;; (require 'flycheck-rtags)
-;; (defun my-flycheck-rtags-setup ()
-;;   (flycheck-select-checker 'rtags)
-;;   (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
-;;   (setq-local flycheck-check-syntax-automatically nil))
-;; ;; c-mode-common-hook is also called by c++-mode
-;; (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
-
-;; (eval-after-load 'flycheck
-;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-;; (require 'lsp-java)
-;; (add-hook 'java-wmode-hook #'lsp)
