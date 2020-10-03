@@ -56,20 +56,9 @@
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
 
-;; load cbrew-theme
-(use-package cbrew-theme
-  :disabled
-  :ensure t
-  :quelpa (cbrew-theme
-           :fetcher github
-           :repo "mihaipop11/cbrew-theme"
-           )
-  :config (load-theme 'cbrew t)
-  )
-
-;;(load-theme 'misterioso)
-;;(load-theme 'ark-dark)
+(load-theme 'misterioso)
 (use-package arc-dark-theme
+  :disabled
   :ensure t
   :config (load-theme 'arc-dark t)
   )
