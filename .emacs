@@ -63,16 +63,14 @@
   :config (load-theme 'arc-dark t)
   )
 
+;; Set cursor color to green
+(set-cursor-color "lime green")
 
-;; (if (not display-graphic-p)
-;;     (load-theme 'arc t)
-;;   (load-theme 'wheatgrass t)
-;;   ;; Set active modeline color to green
-;;   (set-face-attribute 'mode-line nil
-;;                       :background "lime green"
-;;                       :foreground "black"
-;;                       :overline nil
-;;                       :underline nil))
+(set-face-attribute 'mode-line nil
+                    :background "lime green"
+                    :foreground "black"
+                    :overline nil
+                    :underline nil)
 
 (setq org-image-actual-width nil)
 ;; disable backup
