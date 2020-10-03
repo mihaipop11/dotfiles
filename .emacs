@@ -524,6 +524,15 @@ and set the focus back to Emacs frame"
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 (setq lsp-keymap-prefix "s-l")
 
+(use-package rust-mode
+  :ensure t
+  :defer t
+  :init
+  (global-company-mode)
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  (setenv "PATH" (concat (getenv "PATH") ":~/.cargo/bin"))
+  (setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin"))))
+
 (use-package lsp-mode
   :ensure t
   :init
