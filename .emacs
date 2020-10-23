@@ -559,6 +559,7 @@ and set the focus back to Emacs frame"
   :ensure t
   :init
   (global-set-key [f8] 'neotree-project-dir)
+  (setq neo-theme (if (display-graphic-p) 'nerd 'arrow))
   (setq projectile-switch-project-action 'neotree-projectile-action)
   (setq neo-window-width 40)
   )
