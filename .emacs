@@ -541,3 +541,23 @@ and set the focus back to Emacs frame"
   (add-hook 'python-mode-hook
             (lambda () (add-to-list 'company-backends 'company-jedi)))
   )
+
+(defun neotree-project-dir ()
+    "Open NeoTree using the git root."
+    (interactive)
+    (let ((project-dir (projectile-project-root))
+          (file-name (buffer-file-name)))
+      (neotree-toggle)
+      (if project-dir
+          (if (neo-global--window-exists-p)
+              (progn
+                (neotree-dir project-dir)
+                (neotree-find file-name)))
+        (message "Could not find git project root."))))
+
+(use-package neotree
+  :ensure t
+  :init
+  (global-set-key [f8] 'neotree-project-dir)
+  (setq projectile-switch-project-action 'neotree-projectile-action)
+  )
