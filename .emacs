@@ -445,17 +445,17 @@ and set the focus back to Emacs frame"
   :mode "CMakeLists.txt"
   )
 
-(use-package cmake-ide
-  :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\*cmake\\*" . compilation-mode))
-  :init
-  (use-package semantic/bovine/gcc)
-  (setq cmake-ide-flags-c++ (append '("-std=c++20")
-                                    (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c++"))))
-  (setq cmake-ide-flags-c (append (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c"))))
-  (cmake-ide-setup)
-  )
+;; (use-package cmake-ide
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'auto-mode-alist '("\\*cmake\\*" . compilation-mode))
+;;   :init
+;;   (use-package semantic/bovine/gcc)
+;;   (setq cmake-ide-flags-c++ (append '("-std=c++20")
+;;                                     (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c++"))))
+;;   (setq cmake-ide-flags-c (append (mapcar (lambda (path) (concat "-I" path)) (semantic-gcc-get-include-paths "c"))))
+;;   (cmake-ide-setup)
+;;   )
 
 (use-package function-args
   :ensure t
