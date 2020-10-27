@@ -432,6 +432,12 @@ and set the focus back to Emacs frame"
   ;;                         (company-gtags)))
   )
 
+(use-package company-quickhelp          ; Documentation popups for Company
+  :ensure t
+  :defer t
+  :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
+
+
 ;; set propper major mode for newly created
 ;; buffers without a file associated with it
 (setq-default major-mode
