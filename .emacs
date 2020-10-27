@@ -418,15 +418,18 @@ and set the focus back to Emacs frame"
   :init (global-company-mode)
   :bind (("<backtab>" . company-complete-common-or-cycle))
   :config
+  (setq company-show-numbers t)
+  (setq company-tooltip-align-annotations t)
+  (setq company-tooltip-flip-when-above t)
   ;;  (setq company-backends (delete 'company-clang company-backends))
   ;;  (delete 'company-backends 'company-clang)
 
-  (use-package company-c-headers
-    :ensure t
-    :functions company-c-headers
-    :config
-    (add-to-list 'company-backends 'company-c-headers)
-    )
+  ;; (use-package company-c-headers
+  ;;   :ensure t
+  ;;   :functions company-c-headers
+  ;;   :config
+  ;;   (add-to-list 'company-backends 'company-c-headers)
+  ;;   )
 
   ;;(setq company-backends '(company-c-headers
   ;;                         (company-gtags)))
