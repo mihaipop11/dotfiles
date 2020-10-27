@@ -503,7 +503,11 @@ and set the focus back to Emacs frame"
          (rust-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  :commands lsp
+  :config
+  (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf))))
+  ;;(setq lsp-prefer-capf t) ;; using `company-capf' by default but seems not wo work
+  )
 
 ;; optionally
 (use-package lsp-ui
