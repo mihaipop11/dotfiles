@@ -279,73 +279,6 @@ and set the focus back to Emacs frame"
   (counsel-projectile-mode)
   )
 
-(use-package counsel-etags
-  :disabled ;; Using counsel-gtags instead
-  :ensure t
-  :bind (("M-." . counsel-etags-find-tag-at-point)
-         ("M-t" . counsel-etags-grep-symbol-at-point)
-         ("M-s" . counsel-etags-find-tag))
-  :init
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook
-                        'counsel-etags-virtual-update-tags 'append 'local)))
-  :config
-  ;; Ignore files above 800kb
-  ;; (setq counsel-etags-max-file-size 800)
-  ;; Don't ask before rereading the TAGS files if they have changed
-  (setq tags-revert-without-query t)
-  ;; Don't warn when TAGS files are large
-  (setq large-file-warning-threshold nil)
-  ;; How many seconds to wait before rerunning tags for auto-update
-  (setq counsel-etags-update-interval 60)
-
-  ;; ignored files and directories
-  (add-to-list 'counsel-etags-ignore-directories "build")
-  (add-to-list 'counsel-etags-ignore-directories ".vscode")
-  (add-to-list 'counsel-etags-ignore-filenames ".clang-format")
-  )
-
-(use-package ggtags
-  :disabled
-  :ensure t
-  :commands ggtags-mode
-  :init
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-                (ggtags-mode t))))
-  (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
-  (define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
-  (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-  (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-  (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-  (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
-  (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
-  )
-
-(use-package counsel-gtags
-  ;; :disabled
-  :ensure t
-  :pin melpa-stable
-  :init
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-                (counsel-gtags-mode t))))
-  :config
-  (setq counsel-gtags-auto-update t
-        counsel-gtags-path-style 'root
-        )
-  :bind (:map
-         counsel-gtags-mode-map
-         ("M-t" . counsel-gtags-find-definition)
-         ("M-r" . counsel-gtags-find-reference)
-         ("M-s" . counsel-gtags-find-symbol)
-         ("M-." . counsel-gtags-dwim)
-         ("M-," . counsel-gtags-go-backward))
-  )
-
 ;; todo check swiper dependency to ivy and if one should start before the other
 (use-package swiper
   :ensure t
@@ -388,41 +321,13 @@ and set the focus back to Emacs frame"
   ;; (projectile-switch-project-action 'helm-projectile)
   )
 
-(use-package irony
+(use-package ccls
   :ensure t
-  :commands irony-mode
-  ;; standard irony configuration
-  :bind (:map irony-mode-map
-              ("C-c C-b" . irony-cdb-menu)
-              ("C-c =" . irony-get-type))
-  :init
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
   :config
-  (use-package company-irony
-    :ensure t
-    :config
-    (setq company-irony-ignore-case 'smart)
-    (add-to-list 'company-backends 'company-irony)
-
-    (use-package company-irony-c-headers
-      :disabled
-      :ensure t
-      :init
-      (add-to-list 'company-backends 'company-irony-c-headers)
-      )
-    )
-
-  (use-package flycheck-irony
-    :ensure t
-    :commands flycheck-irony-setup
-    :init
-    (add-hook 'c++-mode-hook 'flycheck-irony-setup)
-    (add-hook 'c-mode-hook 'flycheck-irony-setup)
-    (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)))
+;;  (setq ccls-executable "ccls")
+  (setq ccls-executable "/home/mihai/work/ccls/Release/ccls")
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda () (require 'ccls) (lsp))))
 
 (use-package company
   :ensure t
