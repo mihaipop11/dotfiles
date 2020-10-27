@@ -446,6 +446,7 @@ and set the focus back to Emacs frame"
   (setq lsp-ui-sideline-show-diagnostics t)
   (setq lsp-ui-sideline-show-hover t)
   (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-peek-peek-height 40)
   )
 
 ;; if you are ivy user
