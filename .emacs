@@ -326,6 +326,8 @@ and set the focus back to Emacs frame"
   :config
 ;;  (setq ccls-executable "ccls")
   (setq ccls-executable "/home/mihai/work/ccls/Release/ccls")
+  (with-eval-after-load 'projectile
+    (add-to-list 'projectile-globally-ignored-directories ".ccls-cache"))
   :hook ((c-mode c++-mode objc-mode) .
          (lambda () (require 'ccls) (lsp))))
 
