@@ -214,6 +214,7 @@ and set the focus back to Emacs frame"
   (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
   ;; Provides the google C/C++ coding style.
   (use-package google-c-style
+    :disabled
     :ensure t
     :init
     (add-hook 'c-mode-common-hook
