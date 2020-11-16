@@ -246,15 +246,11 @@ and set the focus back to Emacs frame"
   (pinentry-start)
   )
 
-;; todo check counsel dependency to ivy and if one should start before the other
 (use-package counsel
   :ensure t
-  ;;:pin melpa-stable
   :bind*
   (("M-x" . counsel-M-x)
-   ("C-c C-m" . counsel-M-x)
-   ("C-x C-m" . counsel-M-x)
-   ("C-x m" . counsel-M-x)
+   ("C-c b" . counsel-ibuffer)
    ("C-x C-f" . counsel-find-file))
   :custom
   (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git")
