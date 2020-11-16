@@ -271,7 +271,9 @@ and set the focus back to Emacs frame"
 (use-package ivy
   :diminish
   :ensure t
-  :bind ("C-c C-r" . ivy-resume)
+  :bind (("C-s" . swiper)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
