@@ -15,6 +15,8 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; inhibit startup message
 (setq inhibit-startup-message t)
