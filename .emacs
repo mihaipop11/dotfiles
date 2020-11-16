@@ -44,7 +44,7 @@
 ;; disable top menubar
 (menu-bar-mode -1)
 ;; disable scroll-bar
-(toggle-scroll-bar -1)
+(scroll-bar-mode -1)
 ;; Set up the visible bell
 (setq visible-bell t)
 ;; enable time mode in the status bar
