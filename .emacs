@@ -47,10 +47,6 @@
 (scroll-bar-mode -1)
 ;; Set up the visible bell
 (setq visible-bell t)
-;; enable time mode in the status bar
-(display-time-mode 1)
-;; set time hour:min in 24 hour format
-(setq display-time-format "%H:%M")
 ;; show column numbers in statusbar
 (setq column-number-mode t)
 ;; don't use tabs
