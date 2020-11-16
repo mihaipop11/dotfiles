@@ -269,6 +269,7 @@ and set the focus back to Emacs frame"
   )
 
 (use-package ivy
+  :diminish
   :ensure t
   :bind ("C-c C-r" . ivy-resume)
   :config
