@@ -285,6 +285,11 @@ and set the focus back to Emacs frame"
   (setq enable-recursive-minibuffers t)
   )
 
+(use-package ivy-rich
+  :ensure t
+  :init
+  (ivy-rich-mode 1))
+
 (use-package ivy-xref
   :ensure t
   :init
