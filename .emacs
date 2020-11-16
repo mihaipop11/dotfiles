@@ -457,8 +457,9 @@ and set the focus back to Emacs frame"
 ;; optional if you want which-key integration
 (use-package which-key
   :ensure t
-  :config
-  (which-key-mode))
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config (setq which-key-idle-delay 0.2))
 
 ;; company-jedi wires up jedi to be a backend for the auto completion
 ;; library, company-mode.
