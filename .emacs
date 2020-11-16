@@ -1,10 +1,9 @@
 (require 'package)
 
-(add-to-list 'package-archives '(("org" . "https://orgmode.org/elpa/")
-                                 ("gnu" . "https://elpa.gnu.org/packages/")
-                                 ("melpa" . "https://melpa.org/packages/")))
-
 (package-initialize)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (unless package-archive-contents
   (package-refresh-contents))
