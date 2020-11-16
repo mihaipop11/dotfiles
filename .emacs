@@ -37,6 +37,8 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; inhibit startup message
+(setq inhibit-startup-message t)
 ;; disable top toolbar
 (tool-bar-mode -1)
 ;; disable top menubar
