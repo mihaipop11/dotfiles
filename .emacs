@@ -430,8 +430,6 @@ and set the focus back to Emacs frame"
 (use-package lsp-mode
   :ensure t
   :init
-  (setenv "PATH" (concat (getenv "PATH") ":~/.cargo/bin"))
-  (setq exec-path (append exec-path '("~/.cargo/bin")))
   :hook (;; replace rust-mode with concrete major-mode(e. g. python-mode)
          (rust-mode . lsp)
          ;; if you want which-key integration
