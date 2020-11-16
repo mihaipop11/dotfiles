@@ -496,3 +496,14 @@ and set the focus back to Emacs frame"
   (setq projectile-switch-project-action 'neotree-projectile-action)
   (setq neo-window-width 40)
   )
+
+(use-package helpful
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
+
