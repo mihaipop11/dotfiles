@@ -34,6 +34,12 @@
 (setq-default indent-tabs-mode nil)
 ;; set line numbering relative to the cursor
 (setq-default display-line-numbers 'relative)
+;; Disable line numbers for some modes
+(dolist (mode '(term-mode-hook
+                shell-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
 
