@@ -289,6 +289,7 @@ and set the focus back to Emacs frame"
   (counsel-projectile-mode))
 
 (use-package ccls
+  :after lsp
   :ensure t
   :config
 ;;  (setq ccls-executable "ccls")
