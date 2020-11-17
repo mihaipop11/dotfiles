@@ -171,6 +171,9 @@ and set the focus back to Emacs frame"
   :config
   (global-disable-mouse-mode t))
 
+(use-package evil-nerd-commenter
+  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status))
