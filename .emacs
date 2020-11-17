@@ -205,6 +205,7 @@ and set the focus back to Emacs frame"
 
 (use-package undo-tree
   :ensure t
+  :diminish
   :config
   (global-undo-tree-mode t))
 
@@ -300,27 +301,14 @@ and set the focus back to Emacs frame"
          (lambda () (require 'ccls) (lsp))))
 
 (use-package company
-  :ensure t
-  :defer t
-  :init (global-company-mode)
-  :bind (("<backtab>" . company-complete-common-or-cycle))
-  :config
-  (setq company-show-numbers t)
-  (setq company-tooltip-align-annotations t)
-  (setq company-tooltip-flip-when-above t)
-  ;;  (setq company-backends (delete 'company-clang company-backends))
-  ;;  (delete 'company-backends 'company-clang)
-
-  ;; (use-package company-c-headers
-  ;;   :ensure t
-  ;;   :functions company-c-headers
-  ;;   :config
-  ;;   (add-to-list 'company-backends 'company-c-headers)
-  ;;   )
-
-  ;;(setq company-backends '(company-c-headers
-  ;;                         (company-gtags)))
-  )
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+         ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
 
 (use-package company-quickhelp          ; Documentation popups for Company
   :ensure t
@@ -376,27 +364,31 @@ and set the focus back to Emacs frame"
   (add-hook 'c-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode))
 
-;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-(setq lsp-keymap-prefix "s-l")
-
 (use-package rust-mode
   :ensure t
   :defer t
   :init
-  (global-company-mode)
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   (setenv "PATH" (concat (getenv "PATH") ":~/.cargo/bin"))
   (setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin"))))
 
+
+;; (defun efs/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   (lsp-headerline-breadcrumb-mode))
+
 (use-package lsp-mode
   :ensure t
   :init
-  :hook (;; replace rust-mode with concrete major-mode(e. g. python-mode)
+  (setq lsp-keymap-prefix "C-c l") ;; (few alternatives - "C-l", "s-l")
+  :hook ((lsp-mode . lsp-enable-which-key-integration)
+         ;; (lsp-mode . efs/lsp-mode-setup)
          (rust-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+         (c++-mode . lsp)
+         (cc-mode . lsp))
   :commands lsp
   :config
+  ;; (setq lsp-completion-provider :capf))
   (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf)))))
 
 ;; optionally
