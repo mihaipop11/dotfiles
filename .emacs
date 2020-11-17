@@ -42,12 +42,11 @@
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
 
-(load-theme 'misterioso)
-(use-package arc-dark-theme
-  :disabled
+;;(load-theme 'misterioso)
+(use-package zeno-theme
+  ;; :disabled
   :ensure t
-  :config (load-theme 'arc-dark t)
-  )
+  :config (load-theme 'zeno t))
 
 ;; Set cursor color to green
 (set-cursor-color "lime green")
