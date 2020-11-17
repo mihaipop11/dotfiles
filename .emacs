@@ -111,8 +111,6 @@
 ;; jump to first compilation error
 (setq compilation-auto-jump-to-first-error t)
 
-(global-set-key (kbd "C-c b") 'projectile-compile-project)
-
 ;; Overlay windows (What does it do?)
 (add-to-list 'display-buffer-alist
              '("\\*Help\\*" display-buffer-in-side-window))
@@ -298,19 +296,16 @@ and set the focus back to Emacs frame"
   ;; as well
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
+;; (global-set-key (kbd "C-c b") 'projectile-compile-project)
 (use-package projectile
   :ensure t
-  ;; :pin melpa-stable
-  ;; :bind* ((:map projectile-mode-map("C-c p" . projectile-command-map))
-  ;;         (:map projectile-mode-map("s-p" . projectile-command-map)))
+  :diminish
   :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1)
+  (projectile-mode)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
   :custom
-  (projectile-completion-system 'ivy)
-  ;; (projectile-switch-project-action 'helm-projectile)
-  )
+  (projectile-completion-system 'ivy))
 
 (use-package ccls
   :ensure t
