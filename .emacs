@@ -140,8 +140,7 @@ and set the focus back to Emacs frame"
 
 
 (eval-when-compile
-  (require 'use-package)
-  )
+  (require 'use-package))
 
 (use-package whitespace
   :ensure t
@@ -160,35 +159,29 @@ and set the focus back to Emacs frame"
          org-mode
          java-mode))
   :config
-  (global-whitespace-mode t)
-  )
+  (global-whitespace-mode t))
 
 ;; use smooth scrolling in buffers
 (use-package smooth-scrolling
   :ensure t
   :config
-  (smooth-scrolling-mode t)
-  )
+  (smooth-scrolling-mode t))
 
 (use-package disable-mouse
   :ensure t
   :config
-  (global-disable-mouse-mode t)
-  )
+  (global-disable-mouse-mode t))
 
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status)
-  )
+  :bind ("C-x g" . magit-status))
 
-;; TODO check if loading after magit is really needed
 (use-package magit-todos
   :disabled
   :ensure t
   :after magit
   :config
-  (magit-todos-mode t)
-  )
+  (magit-todos-mode t))
 
 (use-package cc-mode
   :defer t
@@ -208,41 +201,34 @@ and set the focus back to Emacs frame"
                 ;; line and space over to the right place
                 (google-make-newline-indent)))
     :config
-    (c-set-offset 'statement-case-open 0)
-    )
-  )
+    (c-set-offset 'statement-case-open 0)))
 
 (use-package undo-tree
   :ensure t
   :config
-  (global-undo-tree-mode t)
-  )
+  (global-undo-tree-mode t))
 
 (use-package call-graph
   :disabled
   :ensure t
-  :bind ("C-c C-g" . call-graph)
-  )
+  :bind ("C-c C-g" . call-graph))
 
 (use-package expand-region
   :ensure t
-  :bind ("C-=" . er/expand-region)
-  )
+  :bind ("C-=" . er/expand-region))
 
 (use-package autopair
   :ensure t
   :config
   ;; enable autopair in all buffers
-  (autopair-global-mode)
-  )
+  (autopair-global-mode))
 
 (use-package pinentry
   :ensure t
   :init
   (setq epa-pinentry-mode 'loopback)
   :config
-  (pinentry-start)
-  )
+  (pinentry-start))
 
 (use-package counsel
   :ensure t
@@ -251,21 +237,13 @@ and set the focus back to Emacs frame"
    ("C-c b" . counsel-ibuffer)
    ("C-x C-f" . counsel-find-file))
   :custom
-  (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git")
-  )
-
-(use-package counsel-projectile
-  :ensure t
-  :config
-  (counsel-projectile-mode)
-  )
+  (counsel-find-file-ignore-regexp "\\.DS_Store\\|.git"))
 
 ;; todo check swiper dependency to ivy and if one should start before the other
 (use-package swiper
   :ensure t
   :bind (("C-s" . swiper)
-         ("M-*" . swiper-under-point))
-  )
+         ("M-*" . swiper-under-point)))
 
 (use-package ivy
   :diminish
@@ -276,13 +254,11 @@ and set the focus back to Emacs frame"
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  )
+  (setq enable-recursive-minibuffers t))
 
 (use-package ivy-rich
   :ensure t
-  :init
-  (ivy-rich-mode 1))
+  :init (ivy-rich-mode 1))
 
 (use-package ivy-xref
   :ensure t
@@ -306,6 +282,11 @@ and set the focus back to Emacs frame"
   ("C-c p" . projectile-command-map)
   :custom
   (projectile-completion-system 'ivy))
+
+(use-package counsel-projectile
+  :ensure t
+  :config
+  (counsel-projectile-mode))
 
 (use-package ccls
   :ensure t
@@ -356,8 +337,7 @@ and set the focus back to Emacs frame"
 
 (use-package cmake-mode
   :ensure t
-  :mode "CMakeLists.txt"
-  )
+  :mode "CMakeLists.txt")
 
 ;; (use-package cmake-ide
 ;;   :ensure t
@@ -382,10 +362,10 @@ and set the focus back to Emacs frame"
 
 (use-package modern-cpp-font-lock
   :ensure t
+  :disabled
   :diminish modern-c++-font-lock-mode
   :hook
-  (c++-mode . modern-c++-font-lock-mode)
-  )
+  (c++-mode . modern-c++-font-lock-mode))
 
 (use-package flycheck
   :ensure t
@@ -393,8 +373,7 @@ and set the focus back to Emacs frame"
   :init
   (add-hook 'c++-mode-hook 'flycheck-mode)
   (add-hook 'c-mode-hook 'flycheck-mode)
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  )
+  (add-hook 'python-mode-hook 'flycheck-mode))
 
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 (setq lsp-keymap-prefix "s-l")
@@ -417,9 +396,7 @@ and set the focus back to Emacs frame"
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
-  (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf))))
-  ;;(setq lsp-prefer-capf t) ;; using `company-capf' by default but seems not wo work
-  )
+  (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf)))))
 
 ;; optionally
 (use-package lsp-ui
@@ -432,8 +409,7 @@ and set the focus back to Emacs frame"
   (setq lsp-ui-sideline-show-diagnostics t)
   (setq lsp-ui-sideline-show-hover t)
   (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-peek-peek-height 40)
-  )
+  (setq lsp-ui-peek-peek-height 40))
 
 ;; if you are ivy user
 (use-package lsp-ivy
@@ -467,8 +443,7 @@ and set the focus back to Emacs frame"
   (setq jedi:complete-on-dot t)
   (setq jedi:use-shortcuts t)
   (add-hook 'python-mode-hook
-            (lambda () (add-to-list 'company-backends 'company-jedi)))
-  )
+            (lambda () (add-to-list 'company-backends 'company-jedi))))
 
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
@@ -489,8 +464,7 @@ and set the focus back to Emacs frame"
   (global-set-key [f8] 'neotree-project-dir)
   (setq neo-theme (if (display-graphic-p) 'nerd 'arrow))
   (setq projectile-switch-project-action 'neotree-projectile-action)
-  (setq neo-window-width 40)
-  )
+  (setq neo-window-width 40))
 
 (use-package helpful
   :custom
