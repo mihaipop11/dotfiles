@@ -42,21 +42,7 @@
 ;; set tab width of 4 characters
 (setq-default c-basic-offset 4)
 
-;;(load-theme 'misterioso)
-(load-theme 'mpi)
-(use-package zeno-theme
-  :disabled
-  :ensure t
-  :config (load-theme 'zeno t))
-
-;; Set cursor color to green
-(set-cursor-color "lime green")
-
-(set-face-attribute 'mode-line nil
-                    :background "lime green"
-                    :foreground "black"
-                    :overline nil
-                    :underline nil)
+(load-theme 'zmpi)
 
 (setq org-image-actual-width nil)
 ;; disable backup
