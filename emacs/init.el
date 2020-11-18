@@ -43,8 +43,9 @@
 (setq-default c-basic-offset 4)
 
 ;;(load-theme 'misterioso)
+(load-theme 'mpi)
 (use-package zeno-theme
-  ;; :disabled
+  :disabled
   :ensure t
   :config (load-theme 'zeno t))
 
@@ -476,3 +477,17 @@ and set the focus back to Emacs frame"
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("ad205177eff5f2e713045858bd17d98365f9e08330967531e435fc1f7fd57983" "f87d6fe627bbf9ce70cdc96a5a7ef5fe764c6c7f6c53380b5de0c7984e0e9762" "b83802acc0718429156b66288bd999afd033765874471dd1c1d0559e0db68781" "20c45ed6dcad5993eb4d5e4032c9d4e311e3dca48cb8346d689069cecbd9b5a8" "ffae4d51e01e3e171f1eea3fd72f9678abd82236f7a8fa1a40342ba76be39890" "ce1de31d62097d5a0528b7b847689c37e2f380a3070da9f72050eda864f7746b" "8a8883052d1accea685e0e4a5a73a1de8534645225cfb18c9cbd95d61cfad18d" "f4d2090db8fd38414498979e40f0d99bb2dc3f13647d3b7a0e5dd6a24ceb7832" "0b8798802120ca22ecfbe44a9c5bf6aba924caf932a60d0736ddd8bd85d342e1" "77667a2aed166eb38e9cf56c5cbcd869789e669d75f591337cd5586dc20c711c" "30f540e7938030cdd44f8f5b56550d1306838c364e3d5ccb992baf9b24427c4d" "6eb0ce82e49be1eb929a427879259d61c78735717113f7b24209ca75581c8487" "06eda83a8e03c88a936452f9359a01e07ff8a7ce49edd778eaa69f2279f32bec" "82bd8d17f6d9d56760da9dc843cdce34c2bba6503e2e8d940b73670b05cd3ef5" "768186e0a3429a42431ed02b4b678378fd1c311fde5c845082c1771ea2a0d858" "f65a4efad63ef89faa69678f184ec79b2edc111c75a4d51f51c10d35df3c3674" "8b2f48c69f568ce295369e7605f38e2e323d4e090aaa480c0414253d3b83f6d9" "a325ba05dc3b5c2fa89af0ff354bbbe90251fb1a6e6d5682977cebe61ce72ab7" default))
+ '(fringe-mode '(1 . 1) nil (fringe)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
