@@ -378,6 +378,8 @@
   :commands lsp
   :config
   ;; (setq lsp-completion-provider :capf))
+  (setq lsp-enable-on-type-formatting nil)
+  (setq lsp-enable-indentation 't)
   (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf)))))
 
 ;; optionally
