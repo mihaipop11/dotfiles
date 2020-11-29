@@ -367,6 +367,7 @@
 
 (use-package lsp-mode
   :ensure t
+  :defer t
   :init
   (setq lsp-keymap-prefix "C-c l") ;; (few alternatives - "C-l", "s-l")
   :hook ((lsp-mode . lsp-enable-which-key-integration)
