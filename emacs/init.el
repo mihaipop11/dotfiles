@@ -100,11 +100,23 @@
 
 ;; Stop on the first error.
 (setq compilation-scroll-output 'first-error)
-
 ;; Don't stop on info or warnings.
 (setq compilation-skip-threshold 2)
 ;; jump to first compilation error
 (setq compilation-auto-jump-to-first-error t)
+;; map f5 key to kill the compilation window
+(defun kill-compilation-window ()
+  "Run compile and resize the compile window closing the old one if necessary"
+  (interactive)
+  (progn
+    (delete-windows-on (get-buffer "*compilation*")) ; Delete the compilation windows
+    ;;(kill-buffer "*compilation*") ; and kill the buffers
+    ))
+(global-set-key [f5] 'kill-compilation-window)
+
+(defvar parameters
+  '(window-parameters . ((no-other-window . t)
+                         (no-delete-other-windows . t))))
 
 ;; Overlay windows (What does it do?)
 (add-to-list 'display-buffer-alist
