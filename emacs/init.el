@@ -118,18 +118,25 @@
   '(window-parameters . ((no-other-window . t)
                          (no-delete-other-windows . t))))
 
-;; Overlay windows (What does it do?)
-(add-to-list 'display-buffer-alist
-             '("\\*Help\\*" display-buffer-in-side-window))
-(add-to-list 'display-buffer-alist
-             '("\\*compilation\\*" (display-buffer-reuse-window display-buffer-in-side-window)
-               (side . bottom) (size . 0.2)))
-(add-to-list 'display-buffer-alist
-             '("\\*Org-Babel Error Output\\*" (display-buffer-reuse-window display-buffer-in-side-window)
-               (side . bottom) (size . 0.2)))
-(add-to-list 'display-buffer-alist
-             '("\\*undo-tree\\*" (display-buffer-reuse-window display-buffer-in-side-window)
-               (side . right) (size . 0.2)))
+(setq fit-window-to-buffer-horizontally t)
+(setq window-resize-pixelwise t)
+
+(setq
+ display-buffer-alist
+ `(("\\*undo-tree\\*" display-buffer-in-side-window
+    (side . right)
+    (slot . 0)
+    (window-width . fit-window-to-buffer)
+    (preserve-size . (t . nil))
+    ,parameters)
+
+   ("\\*\\(?:shell\\|compilation\\)\\*" display-buffer-in-side-window
+    (side . bottom)
+    (slot . 0)
+    (window-height . 18)
+    (preserve-size . (nil . t))
+    ,parameters)
+   ))
 
 (eval-when-compile
   (require 'use-package))
