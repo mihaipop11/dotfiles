@@ -18,7 +18,7 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; inhibit startup message
-;; (setq inhibit-startup-message t)
+(setq inhibit-startup-message t)
 ;; disable top toolbar
 (tool-bar-mode -1)
 ;; disable top menubar
