@@ -480,3 +480,7 @@
   ([remap describe-command] . helpful-command)
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
+
+(use-package term
+  :config
+  (setq term-prompt-regexp "^[^#$%>\\n]*[#$%>] *"))
