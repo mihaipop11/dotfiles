@@ -281,6 +281,7 @@
   :diminish
   :config
   (projectile-mode)
+  (setq projectile-track-known-projects-automatically nil)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :custom
