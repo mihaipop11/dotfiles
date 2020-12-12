@@ -470,6 +470,7 @@
   (setq neo-window-width 40))
 
 (use-package helpful
+  :ensure t
   :custom
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable)
