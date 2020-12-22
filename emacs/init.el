@@ -168,6 +168,7 @@
 
 (use-package disable-mouse
   :ensure t
+  :diminish
   :config
   (global-disable-mouse-mode t))
 
@@ -304,6 +305,7 @@
          (lambda () (require 'ccls) (lsp))))
 
 (use-package company
+  :diminish
   :hook (lsp-mode . company-mode)
   :bind (:map company-active-map
          ("<tab>" . company-complete-selection))
@@ -316,6 +318,7 @@
   (setq company-tooltip-align-annotations t))
 
 (use-package company-box
+  :diminish
   :hook (company-mode . company-box-mode))
 
 (use-package company-quickhelp          ; Documentation popups for Company
@@ -365,6 +368,7 @@
   (c++-mode . modern-c++-font-lock-mode))
 
 (use-package flycheck
+  :diminish
   :ensure t
   :commands flycheck-mode
   :init
@@ -492,3 +496,6 @@
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
   (setq vterm-shell "zsh")                         ;; Set this to customize the shell to launch
   (setq vterm-max-scrollback 10000))
+
+(use-package diminish
+  :ensure t)
