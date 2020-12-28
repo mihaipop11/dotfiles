@@ -186,6 +186,11 @@
   :config
   (magit-todos-mode t))
 
+(use-package forge
+  :ensure t
+  :diminish
+  :after magit)
+
 (use-package cc-mode
   :defer t
   :config
