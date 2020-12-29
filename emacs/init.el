@@ -180,7 +180,6 @@
   :bind ("C-x g" . magit-status))
 
 (use-package magit-todos
-  :disabled
   :ensure t
   :after magit
   :config
