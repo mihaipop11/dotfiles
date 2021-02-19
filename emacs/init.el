@@ -507,3 +507,16 @@
 
 (use-package diminish
   :ensure t)
+
+(use-package plantuml-mode
+  :ensure t
+  :custom
+  (plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
+  (plantuml-default-exec-mode 'jar)
+  :config
+  (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+  ;;(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  (setq plantuml-output-type "png")
+  (setq plantuml-options "-charset UTF-8"))
+
+
