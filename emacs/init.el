@@ -503,3 +503,6 @@
 
 (use-package diminish
   :ensure t)
+
+(use-package qml-mode
+  :ensure t)
