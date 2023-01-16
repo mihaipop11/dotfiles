@@ -65,7 +65,14 @@ fi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
+    git
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    copyfile
+    copypath
+    copybuffer
+    sudo
+    fzf
 )
 
 source $ZSH/oh-my-zsh.sh

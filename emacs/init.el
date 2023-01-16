@@ -36,7 +36,7 @@
 ;; don't use tabs
 (setq-default indent-tabs-mode nil)
 ;; set line numbering relative to the cursor
-(setq-default display-line-numbers 'relative)
+(setq-default display-line-numbers 'absolute)
 ;; Disable line numbers for some modes
 (dolist (mode '(term-mode-hook
                 shell-mode-hook
@@ -219,6 +219,9 @@
   :diminish
   :config
   (global-undo-tree-mode t))
+
+(with-eval-after-load 'undo-tree
+  (setq undo-tree-auto-save-history nil))
 
 (use-package call-graph
   :disabled
@@ -438,7 +441,13 @@
 
 ;; optionally if you want to use debugger
 (use-package dap-mode
-  :ensure t)
+  :ensure t
+  :commands (dap-debug)
+  :config (require 'dap-gdb-lldb) ; gdb mode
+          (dap-mode 1)
+          (dap-tooltip-mode 1)
+          (dap-ui-mode 1)
+          (dap-auto-configure-mode))
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;; optional if you want which-key integration
@@ -522,4 +531,9 @@
   (setq plantuml-output-type "png")
   (setq plantuml-options "-charset UTF-8"))
 
-
+(use-package meson-mode
+  :ensure t
+  :mode "\\meson\\.build\\'"
+  :init
+  (add-hook 'meson-mode-hook 'company-mode)
+  )
