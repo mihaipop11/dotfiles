@@ -43,10 +43,17 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-;; set tab width of 4 characters
-(setq-default c-basic-offset 4)
+;; (use-package nord-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'nord t))
 
-(load-theme 'zmpi)
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-nord-aurora))
+
+;; (load-theme 'zmpi)
 
 (setq org-image-actual-width nil)
 ;; disable backup
@@ -78,12 +85,6 @@
                     (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
-
-;; if macos
-(if (eq system-type 'darwin)
-    ;; map the emacs meta (M) key to the command kb key
-    (setq mac-command-modifier 'meta))
-(put 'upcase-region 'disabled nil)
 
 ;; automatically switch point to the newly created splitted window
 ;; after creation for both vertically and horizontally
@@ -124,6 +125,8 @@
 
 (setq fit-window-to-buffer-horizontally t)
 (setq window-resize-pixelwise t)
+
+(setq electric-pair-mode t)
 
 (setq
  display-buffer-alist
@@ -194,26 +197,6 @@
   :diminish
   :after magit)
 
-(use-package cc-mode
-  :defer t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
-  (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
-  (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
-  ;; Provides the google C/C++ coding style.
-  (use-package google-c-style
-    :disabled
-    :ensure t
-    :init
-    (add-hook 'c-mode-common-hook
-              (lambda ()
-                (google-set-c-style)
-                ;; If you want the RETURN key to go to the next
-                ;; line and space over to the right place
-                (google-make-newline-indent)))
-    :config
-    (c-set-offset 'statement-case-open 0)))
-
 (use-package undo-tree
   :ensure t
   :diminish
@@ -232,11 +215,11 @@
   :ensure t
   :bind ("C-=" . er/expand-region))
 
-(use-package autopair
-  :ensure t
-  :config
-  ;; enable autopair in all buffers
-  (autopair-global-mode))
+;; (use-package autopair
+;;   :ensure t
+;;   :config
+;;   ;; enable autopair in all buffers
+;;   (autopair-global-mode))
 
 (use-package pinentry
   :ensure t
@@ -304,19 +287,8 @@
   :config
   (counsel-projectile-mode))
 
-(use-package ccls
-  :after lsp
-  :ensure t
-  :config
-;;  (setq ccls-executable "ccls")
-  ;; (setq ccls-executable "/home/mihai/work/ccls/Release/ccls")
-  (with-eval-after-load 'projectile
-    (add-to-list 'projectile-globally-ignored-directories ".ccls-cache"))
-  :hook ((c-mode c++-mode objc-mode) .
-         (lambda () (require 'ccls) (lsp))))
-
 (use-package company
-  :diminish
+  :after lsp-mode
   :hook (lsp-mode . company-mode)
   :bind (:map company-active-map
          ("<tab>" . company-complete-selection))
@@ -346,9 +318,9 @@
                            (let ((buffer-file-name (buffer-name)))
                              (set-auto-mode)))))
 
-(use-package cmake-mode
-  :ensure t
-  :mode "CMakeLists.txt")
+;; (use-package cmake-mode
+;;   :ensure t
+;;   :mode "CMakeLists.txt")
 
 ;; (use-package cmake-ide
 ;;   :ensure t
@@ -371,21 +343,22 @@
   ;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   )
 
-(use-package modern-cpp-font-lock
-  :ensure t
-  :disabled
-  :diminish modern-c++-font-lock-mode
-  :hook
-  (c++-mode . modern-c++-font-lock-mode))
+;; (use-package modern-cpp-font-lock
+;;   :ensure t
+;;   :disabled
+;;   :diminish modern-c++-font-lock-mode
+;;   :hook
+;;   (c++-mode . modern-c++-font-lock-mode))
 
 (use-package flycheck
-  :diminish
   :ensure t
   :commands flycheck-mode
   :init
+  (global-flycheck-mode)
   (add-hook 'c++-mode-hook 'flycheck-mode)
   (add-hook 'c-mode-hook 'flycheck-mode)
-  (add-hook 'python-mode-hook 'flycheck-mode))
+  (add-hook 'python-mode-hook 'flycheck-mode)
+  )
 
 (use-package rust-mode
   :ensure t
@@ -395,40 +368,53 @@
   (setenv "PATH" (concat (getenv "PATH") ":~/.cargo/bin"))
   (setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin"))))
 
+;; (use-package cc-mode
+  ;; :bind (:map c-mode-map
+  ;;        ("C-i" . company-indent-or-complete-common)
+  ;;        :map c++-mode-map
+  ;;        ("C-i" . company-indent-or-complete-common))
+  ;; :init
+  ;; (setq-default c-basic-offset 4))
 
 ;; (defun efs/lsp-mode-setup ()
 ;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
 ;;   (lsp-headerline-breadcrumb-mode))
+;; :hook (lsp-mode . efs/lsp-mode-setup)
 
 (use-package lsp-mode
   :ensure t
-  :defer t
   :init
   (setq lsp-keymap-prefix "C-c l") ;; (few alternatives - "C-l", "s-l")
-  :hook ((lsp-mode . lsp-enable-which-key-integration)
-         ;; (lsp-mode . efs/lsp-mode-setup)
-         (rust-mode . lsp)
-         (c++-mode . lsp)
-         (cc-mode . lsp))
+  :hook ((c-mode c++-mode rust-mode) . lsp)
   :commands lsp
   :config
-  ;; (setq lsp-completion-provider :capf))
-  (setq lsp-enable-on-type-formatting nil)
-  (setq lsp-enable-indentation 't)
-  (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf)))))
+  (setq lsp-prefer-flymake nil)
+  (setq eldoc-echo-area-use-multiline-p nil)
+  (setq lsp-enable-symbol-highlighting t)
+  (setq lsp-enable-on-type-formatting t)
+  (setq lsp-enable-which-key-integration t)
+  (setq lsp-enable-indentation t)
+  (setq lsp-diagnostics-provider :flycheck)
+  (setq lsp-diagnostics-flycheck-default-level 'warning)
+  (setq lsp-clients-clangd-args '("--header-insertion-decorators=0"))
+  )
 
 ;; optionally
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode
   :config
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   (setq lsp-ui-doc-enable nil)
+  ;; (setq lsp-ui-doc-position 'top)
   (setq lsp-ui-sideline-show-diagnostics t)
   (setq lsp-ui-sideline-show-hover t)
   (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-peek-peek-height 40))
+  (setq lsp-ui-peek-enable t)
+  ;; (setq lsp-ui-peek-show-directory nil)
+  ;; (setq lsp-ui-peek-peek-height 40)
+  :hook (lsp-mode . lsp-ui-mode)
+  )
 
 ;; if you are ivy user
 (use-package lsp-ivy
@@ -459,16 +445,16 @@
 
 ;; company-jedi wires up jedi to be a backend for the auto completion
 ;; library, company-mode.
-(use-package company-jedi
-  :ensure t
-  :config
-  :hook
-  ((python-mode . jedi:setup))
-  :init
-  (setq jedi:complete-on-dot t)
-  (setq jedi:use-shortcuts t)
-  (add-hook 'python-mode-hook
-            (lambda () (add-to-list 'company-backends 'company-jedi))))
+;; (use-package company-jedi
+;;   :ensure t
+;;   :config
+;;   :hook
+;;   ((python-mode . jedi:setup))
+;;   :init
+;;   (setq jedi:complete-on-dot t)
+;;   (setq jedi:use-shortcuts t)
+;;   (add-hook 'python-mode-hook
+;;             (lambda () (add-to-list 'company-backends 'company-jedi))))
 
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
@@ -502,17 +488,17 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-(use-package term
-  :config
-  (setq term-prompt-regexp "^[^#$%>\\n]*[#$%>] *"))
+;; (use-package term
+;;   :config
+;;   (setq term-prompt-regexp "^[^#$%>\\n]*[#$%>] *"))
 
-(use-package vterm
-  :ensure t
-  :commands vterm
-  :config
-  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
-  (setq vterm-shell "zsh")                         ;; Set this to customize the shell to launch
-  (setq vterm-max-scrollback 10000))
+;; (use-package vterm
+;;   :ensure t
+;;   :commands vterm
+;;   :config
+;;   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
+;;   (setq vterm-shell "zsh")                         ;; Set this to customize the shell to launch
+;;   (setq vterm-max-scrollback 10000))
 
 (use-package diminish
   :ensure t)
@@ -537,3 +523,13 @@
   :init
   (add-hook 'meson-mode-hook 'company-mode)
   )
+
+(use-package eglot
+  :ensure t
+  :config
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  :init
+  (add-hook 'c-mode-hook 'eglot-ensure)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+  )
+
