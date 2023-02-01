@@ -352,12 +352,23 @@
 
 (use-package flycheck
   :ensure t
-  :commands flycheck-mode
   :init
-  (global-flycheck-mode)
-  (add-hook 'c++-mode-hook 'flycheck-mode)
+  ;; (global-flycheck-mode)
+  ;; (add-hook 'c++-mode-hook 'flycheck-mode)
+  (add-hook 'c++-mode-hook
+          (lambda () (progn
+                       (setq flycheck-cppcheck-standards '("c++20"))
+                       (setq flycheck-clang-language-standard "c++20")
+                       (setq flycheck-gcc-language-standard "c++20"))))
   (add-hook 'c-mode-hook 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
+  )
+
+(use-package flycheck-google-cpplint
+  :ensure t
+  :after flycheck lsp-mode lsp-ui-flycheck
+  :config (progn
+          (flycheck-add-next-checker 'c/c++-cppcheck '(t . c/c++-googlelint)))
   )
 
 (use-package rust-mode
@@ -388,18 +399,14 @@
   :hook ((c-mode c++-mode rust-mode) . lsp)
   :commands lsp
   :config
-  (setq lsp-prefer-flymake nil)
   (setq eldoc-echo-area-use-multiline-p nil)
   (setq lsp-enable-symbol-highlighting t)
   (setq lsp-enable-on-type-formatting t)
   (setq lsp-enable-which-key-integration t)
   (setq lsp-enable-indentation t)
-  (setq lsp-diagnostics-provider :flycheck)
-  (setq lsp-diagnostics-flycheck-default-level 'warning)
   (setq lsp-clients-clangd-args '("--header-insertion-decorators=0"))
   )
 
-;; optionally
 (use-package lsp-ui
   :ensure t
   :config
@@ -415,6 +422,18 @@
   ;; (setq lsp-ui-peek-peek-height 40)
   :hook (lsp-mode . lsp-ui-mode)
   )
+
+;; add cppcheck checker in flycheck after lsp
+(defvar-local my/flycheck-local-cache nil)
+(defun my/flycheck-checker-get (fn checker property)
+  (or (alist-get property (alist-get checker my/flycheck-local-cache))
+      (funcall fn checker property))) 
+(advice-add 'flycheck-checker-get :around 'my/flycheck-checker-get)
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'c++-mode)
+              (setq my/flycheck-local-cache '((lsp . ((next-checkers . (c/c++-cppcheck)))))))))
+
 
 ;; if you are ivy user
 (use-package lsp-ivy
@@ -442,19 +461,6 @@
   :init (which-key-mode)
   :diminish which-key-mode
   :config (setq which-key-idle-delay 0.2))
-
-;; company-jedi wires up jedi to be a backend for the auto completion
-;; library, company-mode.
-;; (use-package company-jedi
-;;   :ensure t
-;;   :config
-;;   :hook
-;;   ((python-mode . jedi:setup))
-;;   :init
-;;   (setq jedi:complete-on-dot t)
-;;   (setq jedi:use-shortcuts t)
-;;   (add-hook 'python-mode-hook
-;;             (lambda () (add-to-list 'company-backends 'company-jedi))))
 
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
