@@ -370,20 +370,28 @@
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l") ;; (few alternatives - "C-l", "s-l")
-  :hook ((c-mode c++-mode rust-mode) . lsp)
+  :hook
+  ((c-mode c++-mode rust-mode) . lsp)
+  (lsp-mode . lsp-enable-which-key-integration)
   :commands lsp
+  :custom
+  (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
   :config
   (setq eldoc-echo-area-use-multiline-p nil)
   (setq lsp-enable-symbol-highlighting t)
   (setq lsp-enable-on-type-formatting t)
-  (setq lsp-enable-which-key-integration t)
   (setq lsp-enable-indentation t)
   (setq lsp-clients-clangd-args '("--header-insertion-decorators=0"))
+  (setq lsp-prefer-flymake nil) ;; Prefer using lsp-ui (flycheck) over flymake.
+  ;; (setq lsp-diagnostics-provider :flycheck)
   )
 
 (use-package lsp-ui
   :ensure t
+  :requires lsp-mode flycheck
+  :commands lsp-ui-mode
   :config
+  (setq lsp-ui-flycheck-enable t)
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   (setq lsp-ui-doc-enable nil)
