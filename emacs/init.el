@@ -215,12 +215,6 @@
   :ensure t
   :bind ("C-=" . er/expand-region))
 
-;; (use-package autopair
-;;   :ensure t
-;;   :config
-;;   ;; enable autopair in all buffers
-;;   (autopair-global-mode))
-
 (use-package pinentry
   :ensure t
   :init
@@ -343,13 +337,6 @@
   ;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   )
 
-;; (use-package modern-cpp-font-lock
-;;   :ensure t
-;;   :disabled
-;;   :diminish modern-c++-font-lock-mode
-;;   :hook
-;;   (c++-mode . modern-c++-font-lock-mode))
-
 (use-package flycheck
   :ensure t
   :init
@@ -378,19 +365,6 @@
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   (setenv "PATH" (concat (getenv "PATH") ":~/.cargo/bin"))
   (setenv "PATH" (concat (getenv "PATH") (substitute-in-file-name ":$HOME/.cargo/bin"))))
-
-;; (use-package cc-mode
-  ;; :bind (:map c-mode-map
-  ;;        ("C-i" . company-indent-or-complete-common)
-  ;;        :map c++-mode-map
-  ;;        ("C-i" . company-indent-or-complete-common))
-  ;; :init
-  ;; (setq-default c-basic-offset 4))
-
-;; (defun efs/lsp-mode-setup ()
-;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-;;   (lsp-headerline-breadcrumb-mode))
-;; :hook (lsp-mode . efs/lsp-mode-setup)
 
 (use-package lsp-mode
   :ensure t
@@ -494,18 +468,6 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-;; (use-package term
-;;   :config
-;;   (setq term-prompt-regexp "^[^#$%>\\n]*[#$%>] *"))
-
-;; (use-package vterm
-;;   :ensure t
-;;   :commands vterm
-;;   :config
-;;   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
-;;   (setq vterm-shell "zsh")                         ;; Set this to customize the shell to launch
-;;   (setq vterm-max-scrollback 10000))
-
 (use-package diminish
   :ensure t)
 
@@ -535,6 +497,7 @@
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
   :init
+  (add-hook 'rust-mode-hook 'eglot-ensure)
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure)
   )
