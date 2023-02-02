@@ -339,6 +339,13 @@
 
 (use-package flycheck
   :ensure t
+  :commands flycheck-mode
+  :preface
+  (defvar-local flycheck-local-checkers nil)
+  (defun +flycheck-checker-get(fn checker property)
+    (or (alist-get property (alist-get checker flycheck-local-checkers))
+        (funcall fn checker property)))
+  (advice-add 'flycheck-checker-get :around '+flycheck-checker-get)
   :init
   ;; (global-flycheck-mode)
   ;; (add-hook 'c++-mode-hook 'flycheck-mode)
@@ -372,6 +379,7 @@
   (setq lsp-keymap-prefix "C-c l") ;; (few alternatives - "C-l", "s-l")
   :hook
   ((c-mode c++-mode rust-mode) . lsp)
+  ((c-mode c++-mode) . (lambda () (setq flycheck-local-checkers '((lsp . ((next-checkers . (c/c++-cppcheck))))))))
   (lsp-mode . lsp-enable-which-key-integration)
   :commands lsp
   :custom
@@ -407,15 +415,15 @@
 
 ;; add cppcheck checker in flycheck after lsp
 ;; https://github.com/flycheck/flycheck/issues/1762
-(defvar-local my/flycheck-local-cache nil)
-(defun my/flycheck-checker-get (fn checker property)
-  (or (alist-get property (alist-get checker my/flycheck-local-cache))
-      (funcall fn checker property)))
-(advice-add 'flycheck-checker-get :around 'my/flycheck-checker-get)
-(add-hook 'lsp-managed-mode-hook
-          (lambda ()
-            (when (derived-mode-p 'c++-mode)
-              (setq my/flycheck-local-cache '((lsp . ((next-checkers . (c/c++-cppcheck)))))))))
+;; (defvar-local my/flycheck-local-cache nil)
+;; (defun my/flycheck-checker-get (fn checker property)
+;;   (or (alist-get property (alist-get checker my/flycheck-local-cache))
+;;       (funcall fn checker property)))
+;; (advice-add 'flycheck-checker-get :around 'my/flycheck-checker-get)
+;; (add-hook 'lsp-managed-mode-hook
+;;           (lambda ()
+;;             (when (derived-mode-p 'c++-mode)
+;;               (setq my/flycheck-local-cache '((lsp . ((next-checkers . (c/c++-cppcheck)))))))))
 
 
 ;; if you are ivy user
