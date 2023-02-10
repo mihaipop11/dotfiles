@@ -126,8 +126,6 @@
 (setq fit-window-to-buffer-horizontally t)
 (setq window-resize-pixelwise t)
 
-(setq electric-pair-mode t)
-
 (setq
  display-buffer-alist
  `(("\\*undo-tree\\*" display-buffer-in-side-window
@@ -144,6 +142,8 @@
     (preserve-size . (nil . t))
     ,parameters)
    ))
+
+(electric-pair-mode t)
 
 (eval-when-compile
   (require 'use-package))
@@ -361,8 +361,7 @@
 (use-package flycheck-google-cpplint
   :ensure t
   :after flycheck lsp-mode lsp-ui-flycheck
-  :config (progn
-          (flycheck-add-next-checker 'c/c++-cppcheck '(t . c/c++-googlelint)))
+;;  :config (progn (flycheck-add-next-checker 'c/c++-googlelint '(t . c/c++-cppcheck)))
   )
 
 (use-package rust-mode
@@ -379,7 +378,7 @@
   (setq lsp-keymap-prefix "C-c l") ;; (few alternatives - "C-l", "s-l")
   :hook
   ((c-mode c++-mode rust-mode) . lsp)
-  ((c-mode c++-mode) . (lambda () (setq flycheck-local-checkers '((lsp . ((next-checkers . (c/c++-cppcheck))))))))
+  ((c-mode c++-mode) . (lambda () (setq flycheck-local-checkers '((lsp . ((next-checkers . (c/c++-googlelint))))))))
   (lsp-mode . lsp-enable-which-key-integration)
   :commands lsp
   :custom
@@ -399,7 +398,6 @@
   :requires lsp-mode flycheck
   :commands lsp-ui-mode
   :config
-  (setq lsp-ui-flycheck-enable t)
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   (setq lsp-ui-doc-enable nil)
