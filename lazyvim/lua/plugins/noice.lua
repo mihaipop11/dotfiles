@@ -1,6 +1,6 @@
 return {
   {
-    enabled = true,
+    enabled = false,
     "folke/noice.nvim",
   },
 }
